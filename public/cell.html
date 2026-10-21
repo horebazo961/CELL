@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<title>CELL · Tecnología premium | Quito · Ecuador</title>
+<title>DyTech · Tecnología de calidad | Quito · Ecuador</title>
 <style>
 :root{--bg:#F4F5F6;--surf:#FFFFFF;--tint:#E6E9EB;--tx:#15191D;--mut:#566069;--bd:#D5DADD;--ac:#3B9A89;--acs:#2B7A6B;--onac:#FFFFFF;--warn:#8A5A00;--warnbg:#FFF3D6;--ink:#15191D;--inktx:#F4F5F6;--inkmut:#A3AEB6;--inkbd:#2D353C;--fd:"Bricolage Grotesque",system-ui,sans-serif;--fb:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1316;--surf:#1A2025;--tint:#232B31;--tx:#F4F5F6;--mut:#A3AEB6;--bd:#2D353C;--acs:#3B9A89;--onac:#15191D;--warn:#F2C96B;--warnbg:#3A2F12;color-scheme:dark}}
@@ -512,11 +512,11 @@ pre {
 
 </head>
 <body>
-<div class="demo" id="demoBar" role="status" hidden>DEMO — datos simulados. Los modelos, precios, existencias y garantías son ficticios y no representan ofertas reales.</div>
+<div class="demo" id="demoBar" role="status" hidden>D</div>
 <header>
   <div class="wrap">
-    <a class="brand" href="#/" aria-label="CELL Tecnología y Accesorios"><svg class="brand-logo" viewBox="0 0 200 200" width="48" height="48" role="img" aria-label="CELL Tecnología y Accesorios" xmlns="http://www.w3.org/2000/svg">
-  <title>CELL · Tecnología &amp; Accesorios</title>
+    <a class="brand" href="#/" aria-label="CELL Tecnología y Accesorios de calidad"><svg class="brand-logo" viewBox="0 0 200 200" width="48" height="48" role="img" aria-label="CELL Tecnología y Accesorios" xmlns="http://www.w3.org/2000/svg">
+  <title>DyTech · Tecnología de calidad</title>
   <desc>Logo CELL: anillos teal, wordmark metálico y iconos de celular, funda y audífonos</desc>
   <!-- rings -->
   <circle cx="100" cy="100" r="88" fill="none" stroke="#3B9A89" stroke-width="3.2" opacity="0.95"/>
@@ -556,7 +556,7 @@ pre {
 </svg><span class="brand-text"><span class="brand-name"><span>C</span>ELL</span><span class="brand-tag">Tecnología &amp; Accesorios</span></span></a>
     <nav aria-label="Principal" id="nav">
       <a href="#/" data-r="">Inicio</a>
-      <a href="#/catalogo" data-r="catalogo">Celulares</a>
+      <a href="#/catalogo" data-r="catálogo">Catálogo</a>
       <a href="#/accesorios" data-r="accesorios">Accesorios</a>
       <a href="#/contacto" data-r="contacto">Contacto</a>
       <a href="#/politicas" data-r="politicas">Políticas y garantía</a>
@@ -682,18 +682,14 @@ var V = {
     return '<h1>Contacto y ubicación</h1>'+
       '<p class="lead">Escribe por WhatsApp. Un asesor confirma disponibilidad, condición, garantía y precio final.</p>'+
       '<p><a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/593993017483">WhatsApp principal · +593 99 301 7483</a></p>'+
-      '<p style="margin-top:12px"><a class="btn sec" target="_blank" rel="noopener noreferrer" href="https://wa.me/593995792922">WhatsApp secundario · +593 99 579 2922</a></p>'+
-      '<p class="note" style="margin-top:20px">Dirección y horarios: se confirman por WhatsApp según disponibilidad del local en Quito.</p>'+
-      '<p class="mut">Abrir WhatsApp no completa una compra ni una reserva.</p>';
-  },
+      '<p style="margin-top:12px"><a class="btn sec" target="_blank" rel="noopener noreferrer" href="https://wa.me/593995792922">WhatsApp secundario · +593 99 579 2922</a></p>';
+  },   
   politicas: function(){
-    return '<h1>Políticas comerciales y garantía</h1><p>Condición, precio, garantía y notas se muestran tal como están registrados para cada equipo. Si un dato no está registrado, se indica como “sin registrar” y se confirma por WhatsApp antes de la venta.</p>'+
-      '<p>Abrir WhatsApp no completa una compra ni una reserva: la disponibilidad y el precio final los confirma un asesor.</p><p class="note">Texto definitivo pendiente de revisión por la persona responsable del negocio.</p>';
+    return '<h1>Políticas comerciales y garantía</h1><p>Condición, precio, garantía y notas se muestran tal como están registrados para cada equipo.</p>';
   },
   privacidad: function(){
-    return '<h1>Privacidad</h1><p>Este sitio no guarda el contenido de tus conversaciones de WhatsApp. Las métricas previstas son recuentos de vistas y clics, sin contenido de mensajes.</p>'+
-      '<p class="note">Aviso completo (base legal, finalidades y retención según la normativa ecuatoriana) pendiente de redacción y revisión legal antes de publicar.</p>';
-  },
+    return '<h1>Privacidad</h1><p>Este sitio no guarda el contenido de tus conversaciones de WhatsApp.</p>';
+  },      
   admin: function(){
     return '<h1>Acceso administrativo</h1><p>No disponible en este prototipo. La autenticación, la importación de CSV con vista previa y el registro de auditoría se construyen en la Fase 2, con validación en servidor. Ningún control de esta página puede modificar el inventario.</p>';
   }
