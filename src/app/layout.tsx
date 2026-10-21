@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "CELL · Tecnología premium | Quito · Ecuador",
+  title: "CELL · Tecnología de calidad | Quito · Ecuador",
   description:
     "Equipos verificados, accesorios y personalización. Consulta por WhatsApp.",
 };
