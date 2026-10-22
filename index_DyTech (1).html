@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DyTech — Tecnología de calidad a tu alcance</title>
+<meta name="description" content="DyTech: celulares con condición, precio y garantía a la vista. Consulta por WhatsApp; confirma antes de pagar.">
+<meta name="theme-color" content="#0F1316">
+<!--
+  DyTech — catálogo público (lógica cell.html / SPEC V1.1)
+  - UI propia (cards). NO iframe de Google Sheets.
+  - Datos: proxy same-origin /api/catalog?tipo=celulares (Vercel)
+    con fallback al CSV publicado.
+  - Solo filas publicables: publicado=true, estado=disponible, cantidad>0.
+  - Columnas internas (imei_interno, precio_compra_interno) NO se muestran.
+-->
+<style>
+:root{--g0:#0F1316;--g1:#14181C;--g2:#1B2127;--g3:#252C33;--plata:#C7CFD6;--p2:#9AA5AE;--teal:#3B9A89;--tl:#7FD0C1;--tx:#E8EDF0;--ln:#2E363D;--r:12px}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:112px}
+body{margin:0;background:var(--g1);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}:focus-visible{outline:3px solid var(--tl);outline-offset:3px}
+.wrap{width:min(1160px,calc(100% - 32px));margin:auto}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;z-index:99;background:var(--plata);color:var(--g0);padding:8px 12px}
+.top{position:sticky;top:0;z-index:40;background:var(--g0);border-bottom:1px solid var(--ln)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0 4px}
+.brand{text-decoration:none;display:flex;flex-direction:column;line-height:1.1}
+.brand b{font-size:1.55rem;font-weight:800;letter-spacing:-.04em}
+.brand b:after{content:"";display:block;height:3px;background:var(--teal);margin-top:3px}
+.brand small{color:var(--p2);font-size:.72rem;margin-top:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.nav{display:flex;gap:4px;overflow-x:auto;padding:0 0 8px}
+.nav a{padding:6px 12px;min-height:40px;display:inline-flex;align-items:center;border-radius:8px;text-decoration:none;color:var(--plata);font-size:.92rem;white-space:nowrap}
+.nav a[aria-current=true]{background:var(--plata);color:var(--g0)}
+.btn{min-height:44px;padding:10px 16px;border-radius:8px;border:1px solid var(--teal);background:var(--teal);color:var(--g0);font:inherit;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.btn.sil{background:var(--plata);border-color:var(--plata)}
+.btn.ghost{background:transparent;color:var(--plata);border-color:var(--p2)}
+.band{height:14px;background:var(--g0) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M14 1l6 6-6 6-6-6z' fill='none' stroke='%233B9A89'/%3E%3Cpath d='M0 7h4M24 7h4' stroke='%239AA5AE'/%3E%3C/svg%3E") repeat-x center;border-block:1px solid var(--ln)}
+.hero-in{display:grid;grid-template-columns:1.3fr .7fr;gap:32px;align-items:center;padding:56px 0}
+h1{margin:0 0 16px;font-weight:800;letter-spacing:-.045em;line-height:1.02}
+h1 span{display:block;font-size:clamp(2.8rem,8vw,5rem)}
+h1 em{display:block;font-style:normal;font-weight:600;font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:-.02em;color:var(--plata);margin-top:6px}
+.hero p{color:var(--p2);max-width:54ch;margin:0 0 22px}
+.dial{border:1px solid var(--p2);border-radius:28px;background:var(--g2);padding:28px 22px;text-align:center}
+.dial strong{display:block;font-size:clamp(2.4rem,6vw,3.6rem);letter-spacing:.05em;color:var(--tl);margin:6px 0}
+.dial p{margin:0;font-size:.9rem}
+.sec{padding:56px 0}.alt{background:var(--g2);border-block:1px solid var(--ln)}
+h2{margin:0 0 8px;font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:800;letter-spacing:-.03em}
+.lead{color:var(--p2);margin:0 0 24px;max-width:62ch}
+.tools{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tools .s{grid-column:span 2}
+label.l{display:block;font-size:.78rem;font-weight:700;color:var(--plata);margin-bottom:4px}
+.f{width:100%;min-height:44px;padding:10px 12px;border-radius:8px;border:1px solid var(--ln);background:var(--g0);color:var(--tx);font:inherit}
+.meta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:14px 0;color:var(--p2);font-size:.9rem;flex-wrap:wrap}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:var(--g2);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.ph{height:170px;background:var(--g3);display:grid;place-items:center}.ph img{width:100%;height:100%;object-fit:contain}
+.pf{width:64px;height:118px;border:3px solid var(--p2);border-radius:16px;position:relative}
+.pf:after{content:"";position:absolute;top:8px;left:50%;width:18px;height:4px;margin-left:-9px;background:var(--p2);border-radius:4px}
+.cb{padding:16px;display:flex;flex-direction:column;flex:1}.cb .act{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
+.mk{color:var(--tl);font-size:.85rem;font-weight:700}.cb h3{margin:2px 0;font-size:1.15rem}.vr{margin:0;color:var(--p2);font-size:.9rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0;padding:0;list-style:none}
+.chips li{font-size:.78rem;border:1px solid var(--ln);border-radius:999px;padding:2px 10px;color:var(--plata)}
+.pr{font-size:1.45rem;font-weight:800;margin:10px 0}
+.pr small{display:block;font-size:.72rem;font-weight:600;color:var(--p2);margin-top:2px}
+.msg{border:1px dashed var(--p2);border-radius:var(--r);padding:32px 20px;text-align:center;color:var(--plata)}.msg p{margin:6px 0 14px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0 0 20px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.steps li{counter-increment:s;background:var(--g1);border:1px solid var(--ln);border-radius:var(--r);padding:16px 16px 16px 58px;position:relative}
+.steps li:before{content:counter(s);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--teal);color:var(--g0);font-weight:800;display:grid;place-items:center}
+.soon{display:none;place-items:center;text-align:center;gap:8px;padding:44px 20px;border:1px dashed var(--p2);border-radius:var(--r)}.soon strong{font-size:1.25rem}.soon p{margin:0;color:var(--p2)}
+[data-state=hide]{display:none}[data-state=soon] .mod{display:none}[data-state=soon] .soon{display:grid}
+.media{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.media figure{margin:0}.media img,.media video{width:100%;border-radius:var(--r);background:var(--g3)}.media figcaption{color:var(--p2);font-size:.88rem;margin-top:4px}
+.nums{list-style:none;padding:0;margin:0 0 18px;color:var(--plata)}.small{color:var(--p2);font-size:.85rem;max-width:70ch}
+footer{border-top:1px solid var(--ln);background:var(--g0);padding:28px 0 72px;color:var(--p2);font-size:.88rem}
+footer .row{justify-content:space-between}
+dialog{background:var(--g2);color:var(--tx);border:1px solid var(--p2);border-radius:var(--r);padding:0;width:min(560px,calc(100% - 24px));max-height:90vh}dialog::backdrop{background:#000a}
+.dp{padding:20px}.dh{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:10px}.dh h2{font-size:1.4rem}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}.dl small{display:block;color:var(--p2)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:90;background:var(--plata);color:var(--g0);padding:10px 16px;border-radius:8px;font-weight:700}
+@media(max-width:760px){.hero-in{grid-template-columns:1fr;padding:36px 0}.tools .s{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#catalogo">Saltar al contenido</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" aria-label="DyTech, inicio"><b>DyTech</b><small>Tecnología de calidad a tu alcance</small></a>
+    <div class="row" data-wa="Hola DyTech, quiero información."></div>
+  </div>
+  <nav class="wrap nav" aria-label="Secciones de la página">
+    <a href="#inicio">Inicio</a>
+    <a data-nav="catalogo" href="#catalogo">Celulares</a>
+    <a data-nav="compra" href="#compra">Compra segura</a>
+    <a data-nav="showroom" href="#showroom">Showroom</a>
+    <a data-nav="contacto" href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<main>
+<section id="inicio" class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <h1><span>DyTech</span><em>Tecnología de calidad a tu alcance</em></h1>
+      <p>Mira la condición, el precio y la garantía de cada celular antes de escribirnos. La disponibilidad y el precio final se confirman por WhatsApp.</p>
+      <div class="row">
+        <a class="btn" href="#catalogo">Ver celulares</a>
+        <a class="btn ghost" href="#compra">Cómo comprar seguro</a>
+      </div>
+    </div>
+    <aside class="dial" aria-label="Cómo ver el IMEI">
+      <p>Marca esto en el teléfono</p>
+      <strong>*#06#</strong>
+      <p>Compara el IMEI que aparece con el de la caja o la bandeja SIM.</p>
+    </aside>
+  </div>
+  <div class="band" aria-hidden="true"></div>
+</section>
+
+<section id="catalogo" class="sec" data-module="catalogo" data-label="Catálogo de celulares">
+  <div class="wrap mod">
+    <h2>Celulares disponibles</h2>
+    <p class="lead">Busca por marca o modelo. Abrir WhatsApp no reserva ni compra: un asesor confirma stock, condición, garantía y precio final.</p>
+    <div class="tools" role="search" aria-label="Buscar y filtrar celulares">
+      <div class="s"><label class="l" for="q">Buscar</label><input class="f" id="q" type="search" placeholder="Ej. Samsung Galaxy" autocomplete="off"></div>
+      <div><label class="l" for="fb">Marca</label><select class="f" id="fb"><option value="">Todas</option></select></div>
+      <div><label class="l" for="fc">Condición</label><select class="f" id="fc">
+        <option value="">Todas</option>
+        <option value="nuevo">Nuevo</option>
+        <option value="usado">Usado</option>
+        <option value="reacondicionado">Reacondicionado</option>
+        <option value="caja_abierta">Caja abierta</option>
+      </select></div>
+      <div><label class="l" for="fs">Almacenamiento</label><select class="f" id="fs">
+        <option value="">Cualquiera</option>
+        <option value="64">64 GB</option>
+        <option value="128">128 GB</option>
+        <option value="256">256 GB</option>
+        <option value="512">512 GB o más</option>
+      </select></div>
+      <div><label class="l" for="fo">Ordenar</label><select class="f" id="fo">
+        <option value="">Relevancia</option>
+        <option value="pa">Precio: menor a mayor</option>
+        <option value="pd">Precio: mayor a menor</option>
+        <option value="na">Modelo: A–Z</option>
+      </select></div>
+    </div>
+    <div class="meta">
+      <span id="cnt" aria-live="polite"></span>
+      <button class="btn ghost" id="clr" type="button">Limpiar filtros</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="msg" id="msg" hidden></div>
+  </div>
+</section>
+
+<section id="compra" class="sec alt" data-module="compra" data-label="Compra segura">
+  <div class="wrap mod">
+    <h2>Compra segura, paso a paso</h2>
+    <p class="lead">Estas verificaciones toman pocos minutos y ayudan a evitar equipos reportados o adulterados.</p>
+    <ol class="steps">
+      <li>Marca <b>*#06#</b> en el celular y anota el IMEI que aparece.</li>
+      <li>Compáralo con el de la caja o la bandeja SIM: deben coincidir.</li>
+      <li>Consúltalo en <b>Tu Celular Legal</b> de ARCOTEL (homologación y reportes).</li>
+      <li>Pide factura y garantía por escrito antes de pagar.</li>
+    </ol>
+    <p class="small">Si el equipo aparece reportado, no lo compres. DyTech confirma condición y documentos en la atención comercial.</p>
+    <div class="row"><a class="btn" id="arc" href="https://tucelularlegal.arcotel.gob.ec/" target="_blank" rel="noopener noreferrer">Abrir Tu Celular Legal</a></div>
+  </div>
+</section>
+
+<section id="showroom" class="sec" data-module="showroom" data-label="Showroom y local físico">
+  <div class="wrap">
+    <div class="mod">
+      <h2>Showroom</h2>
+      <p class="lead" id="shAddr"></p>
+      <div class="media" id="shMedia"></div>
+    </div>
+    <div class="soon" role="status">
+      <strong>Próximamente: Showroom</strong>
+      <p>Fotos y videos del local en preparación. Mientras tanto, consúltanos por WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="sec alt" data-module="contacto" data-label="Contacto">
+  <div class="wrap mod">
+    <h2>Escríbenos por WhatsApp</h2>
+    <p class="lead">Un asesor confirma disponibilidad, condición, garantía y precio final antes de cualquier pago.</p>
+    <ul class="nums" id="nums"></ul>
+    <div class="row" data-wa="Hola DyTech, quiero información sobre un celular."></div>
+    <p class="small" style="margin-top:18px">Esta página no crea cuentas ni formularios. Lo que compartas por WhatsApp se usa para atender tu consulta.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© <span id="yr"></span> DyTech · Tecnología de calidad a tu alcance</span>
+    <a href="#inicio">Volver arriba</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<dialog id="dlg" aria-labelledby="dT">
+  <div class="dp">
+    <div class="dh">
+      <h2 id="dT"></h2>
+      <button class="btn ghost" data-close type="button">Cerrar</button>
+    </div>
+    <div id="dBody"></div>
+  </div>
+</dialog>
+
+<noscript><p style="text-align:center;padding:16px">Activa JavaScript para ver el catálogo y WhatsApp.</p></noscript>
+
+<script>
+"use strict";
+
+/**
+ * CONFIG — único bloque a revisar al publicar
+ * csvProxy: ruta en Vercel (recomendado, evita CORS)
+ * csvPublic: CSV publicado de Google Sheets (fallback)
+ */
+const CONFIG = {
+  wa: [
+    { label: "Principal", n: "593993017483", show: "+593 99 301 7483" },
+    { label: "Alterno", n: "593995792922", show: "+593 99 579 2922" }
+  ],
+  csvProxy: "/api/catalog?tipo=celulares",
+  csvPublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRu-3dyDh5xRn7UOp14h3iQG9NwXiVjh4eeyOryAoNMh8T6cU8BMOaSk6vT9Cmxe3FFHgE9HuRbxjBb/pub?gid=348736088&single=true&output=csv",
+  arcotelUrl: "https://tucelularlegal.arcotel.gob.ec/",
+  showroom: { address: "", media: [] },
+  modules: {
+    catalogo: { on: true, off: "hide" },
+    compra: { on: true, off: "hide" },
+    showroom: { on: false, off: "soon" },
+    contacto: { on: true, off: "hide" }
+  }
+};
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const money = (n) => new Intl.NumberFormat("es-EC", { style: "currency", currency: "USD" }).format(n);
+const okUrl = (u) => /^https:\/\//i.test(u || "");
+const waUrl = (n, t) => "https://wa.me/" + n + "?text=" + encodeURIComponent(t);
+const waBtns = (t) =>
+  CONFIG.wa
+    .filter((w) => /^\d{8,15}$/.test(w.n))
+    .map((w, i) => '<a class="btn' + (i ? " sil" : "") + '" href="' + waUrl(w.n, t) + '" target="_blank" rel="noopener noreferrer">WhatsApp ' + esc(w.label) + "</a>")
+    .join("");
+
+let tt;
+const toast = (m) => {
+  const t = $("#toast");
+  t.textContent = m;
+  t.hidden = false;
+  clearTimeout(tt);
+  tt = setTimeout(() => (t.hidden = true), 2600);
+};
+
+/* Módulos (showroom próximamente, etc.) */
+const MODS = $$("[data-module]").map((s) => ({
+  id: s.dataset.module,
+  label: s.dataset.label,
+  el: s,
+  soon: !!s.querySelector(".soon")
+}));
+const ready = { showroom: () => CONFIG.showroom.media.length > 0 };
+function cfg(id) {
+  const b = CONFIG.modules[id] || { on: true, off: "hide" };
+  return { on: b.on, off: b.off };
+}
+function applyModules() {
+  MODS.forEach((m) => {
+    const c = cfg(m.id);
+    const ok = !ready[m.id] || ready[m.id]();
+    const st = c.on ? (ok ? "on" : m.soon ? "soon" : "hide") : c.off === "soon" && m.soon ? "soon" : "hide";
+    m.el.dataset.state = st;
+    $$('[data-nav="' + m.id + '"]').forEach((a) => (a.hidden = st === "hide"));
+  });
+}
+
+/* CSV → productos (esquema Sheet CELL/DyTech) */
+const COND = {
+  nuevo: "Nuevo",
+  usado: "Usado",
+  reacondicionado: "Reacondicionado",
+  caja_abierta: "Caja abierta",
+  "caja abierta": "Caja abierta",
+  desconocido: "Desconocido"
+};
+
+function parseCSV(t) {
+  const rows = [];
+  let r = [],
+    c = "",
+    q = false;
+  t = String(t || "").replace(/^\uFEFF/, "");
+  for (let i = 0; i < t.length; i++) {
+    const ch = t[i];
+    if (q) {
+      if (ch === '"' && t[i + 1] === '"') {
+        c += '"';
+        i++;
+      } else if (ch === '"') q = false;
+      else c += ch;
+    } else if (ch === '"' && c === "") q = true;
+    else if (ch === ",") {
+      r.push(c);
+      c = "";
+    } else if (ch === "\n") {
+      r.push(c.replace(/\r$/, ""));
+      rows.push(r);
+      r = [];
+      c = "";
+    } else c += ch;
+  }
+  if (c || r.length) {
+    r.push(c.replace(/\r$/, ""));
+    rows.push(r);
+  }
+  return rows.filter((x) => x.some((v) => String(v).trim()));
+}
+
+function normHeader(h) {
+  return String(h || "")
+    .replace(/^\uFEFF/, "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_");
+}
+
+function parsePrice(raw) {
+  let s = String(raw || "").trim().replace(/[^\d.,\-]/g, "");
+  if (!s) return NaN;
+  // "1,500.00" → 1500.00 | "1500,50" → 1500.50 | "1500.00" → 1500
+  if (s.indexOf(",") >= 0 && s.indexOf(".") >= 0) s = s.replace(/,/g, "");
+  else if (s.indexOf(",") >= 0 && s.indexOf(".") < 0) {
+    const parts = s.split(",");
+    s = parts.length === 2 && parts[1].length <= 2 ? parts[0] + "." + parts[1] : s.replace(/,/g, "");
+  }
+  return Number(s);
+}
+
+function isPublished(v) {
+  const t = String(v || "").trim().toLowerCase();
+  return t === "true" || t === "1" || t === "si" || t === "sí" || t === "yes";
+}
+
+function toProducts(text) {
+  const rows = parseCSV(text);
+  if (rows.length < 2) return [];
+  const h = rows[0].map(normHeader);
+  const need = ["sku", "marca", "modelo", "precio", "cantidad", "estado", "publicado"];
+  const missing = need.filter((k) => !h.includes(k));
+  if (missing.length) throw new Error("CSV incompleto: faltan " + missing.join(", "));
+
+  const idx = Object.fromEntries(h.map((k, i) => [k, i]));
+  const g = (r, k) => String(r[idx[k]] ?? "").trim();
+  const seen = new Set();
+  const out = [];
+
+  rows.slice(1).forEach((r, i) => {
+    const sku = g(r, "sku");
+    const brand = g(r, "marca");
+    const model = g(r, "modelo");
+    if (!sku || !brand || !model) return;
+    if (seen.has(sku)) return;
+    seen.add(sku);
+
+    if (!isPublished(g(r, "publicado"))) return;
+    const estado = g(r, "estado").toLowerCase();
+    if (estado !== "disponible" && estado !== "available") return;
+
+    const qty = Number(g(r, "cantidad"));
+    if (!Number.isFinite(qty) || qty < 1) return;
+
+    const price = parsePrice(g(r, "precio"));
+    if (!Number.isFinite(price) || price < 0) return;
+
+    const variant = g(r, "variante");
+    const condRaw = g(r, "condicion").toLowerCase().replace(/\s+/g, "_");
+    const cond = COND[condRaw] ? condRaw : COND[g(r, "condicion").toLowerCase()] ? g(r, "condicion").toLowerCase() : "desconocido";
+
+    const img =
+      g(r, "fotos_urls") ||
+      g(r, "imagen_url") ||
+      g(r, "imagen") ||
+      "";
+    const st = (variant.match(/(?:^|\D)(64|128|256|512|1024)\s*GB/i) || [])[1];
+
+    out.push({
+      sku,
+      brand,
+      model,
+      variant,
+      cond: COND[cond] ? cond : "desconocido",
+      price,
+      qty,
+      warranty: g(r, "garantia"),
+      notes: g(r, "notas_condicion"),
+      img: okUrl(img) ? img.split(/[\s,|]+/)[0] : "",
+      storage: st ? +st : null
+    });
+  });
+  return out;
+}
+
+let products = [];
+let loadState = "loading";
+
+async function fetchText(url) {
+  const ac = new AbortController();
+  const to = setTimeout(() => ac.abort(), 12000);
+  try {
+    const res = await fetch(url, {
+      signal: ac.signal,
+      cache: "no-store",
+      headers: { Accept: "text/csv,text/plain,*/*" }
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    if (text.length > 2e6) throw new Error("Archivo demasiado grande");
+    return text;
+  } finally {
+    clearTimeout(to);
+  }
+}
+
+async function loadCatalog() {
+  loadState = "loading";
+  render();
+  try {
+    let text;
+    try {
+      text = await fetchText(CONFIG.csvProxy);
+    } catch (e1) {
+      text = await fetchText(CONFIG.csvPublic);
+    }
+    products = toProducts(text);
+    loadState = "ok";
+  } catch (e) {
+    console.error(e);
+    products = [];
+    loadState = "error";
+  }
+  render();
+  route();
+}
+
+/* Vista */
+function art(p) {
+  if (p.img)
+    return (
+      '<img src="' +
+      esc(p.img) +
+      '" alt="' +
+      esc(p.brand + " " + p.model) +
+      '" loading="lazy" width="250" height="170" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{className:\'pf\',role:\'img\'}))">'
+    );
+  return '<div class="pf" role="img" aria-label="Foto por confirmar"></div>';
+}
+
+function filtered() {
+  const q = $("#q").value.trim().toLocaleLowerCase("es");
+  const b = $("#fb").value;
+  const c = $("#fc").value;
+  const s = $("#fs").value;
+  const o = $("#fo").value;
+  const l = products.filter(
+    (p) =>
+      (!q || [p.sku, p.brand, p.model, p.variant].join(" ").toLocaleLowerCase("es").includes(q)) &&
+      (!b || p.brand === b) &&
+      (!c || p.cond === c) &&
+      (!s || (s === "512" ? p.storage >= 512 : String(p.storage) === s))
+  );
+  const f = {
+    pa: (a, b) => a.price - b.price,
+    pd: (a, b) => b.price - a.price,
+    na: (a, b) => (a.brand + a.model).localeCompare(b.brand + b.model, "es")
+  }[o];
+  return f ? l.sort(f) : l;
+}
+
+function msg(h) {
+  const m = $("#msg");
+  m.hidden = !h;
+  m.innerHTML = h || "";
+}
+
+function render() {
+  const sel = $("#fb");
+  const cur = sel.value;
+  const bs = [...new Set(products.map((p) => p.brand))].sort((a, b) => a.localeCompare(b, "es"));
+  sel.innerHTML = '<option value="">Todas</option>' + bs.map((b) => '<option value="' + esc(b) + '">' + esc(b) + "</option>").join("");
+  if (bs.includes(cur)) sel.value = cur;
+
+  const l = filtered();
+  $("#grid").innerHTML = l
+    .map(
+      (p) =>
+        '<article class="card"><div class="ph">' +
+        art(p) +
+        '</div><div class="cb"><span class="mk">' +
+        esc(p.brand) +
+        "</span><h3>" +
+        esc(p.model) +
+        '</h3><p class="vr">' +
+        esc(p.variant || "Variante por confirmar") +
+        '</p><ul class="chips"><li>' +
+        esc(COND[p.cond] || p.cond) +
+        "</li>" +
+        (p.storage ? "<li>" + p.storage + " GB</li>" : "") +
+        (p.warranty ? "<li>" + esc(p.warranty) + "</li>" : "") +
+        '</ul><div class="pr">' +
+        money(p.price) +
+        "<small>USD · confirmar precio final</small></div><div class=\"act\"><button class=\"btn ghost\" type=\"button\" data-d=\"" +
+        esc(p.sku) +
+        '">Ver ficha</button><a class="btn" target="_blank" rel="noopener noreferrer" href="' +
+        waUrl(
+          (CONFIG.wa[0] || {}).n || "",
+          "Hola DyTech, me interesa " + p.brand + " " + p.model + " (código " + p.sku + "). ¿Pueden confirmar disponibilidad y precio final?"
+        ) +
+        '">Consultar</a></div></div></article>'
+    )
+    .join("");
+
+  $("#cnt").textContent =
+    loadState === "ok" ? l.length + (l.length === 1 ? " equipo disponible" : " equipos disponibles") : loadState === "loading" ? "Cargando…" : "";
+
+  const wa = '<div class="row" style="justify-content:center">' + waBtns("Hola DyTech, quiero ver los celulares disponibles.") + "</div>";
+  if (loadState === "loading") msg("<p>Cargando catálogo…</p>");
+  else if (loadState === "error")
+    msg(
+      "<strong>No pudimos cargar el catálogo</strong><p>Si abres el archivo en local, el navegador puede bloquear el CSV. En Vercel usa el proxy <code>/api/catalog</code>.</p><div class=\"row\" style=\"justify-content:center\"><button class=\"btn\" type=\"button\" id=\"retry\">Reintentar</button></div>" +
+        wa
+    );
+  else if (!l.length) msg("<strong>No hay equipos con esos criterios</strong><p>Prueba otra marca o limpia los filtros.</p>");
+  else msg("");
+}
+
+function openDetail(sku) {
+  const p = products.find((x) => x.sku === sku);
+  if (!p) return;
+  const t =
+    "Hola DyTech, me interesa " +
+    p.brand +
+    " " +
+    p.model +
+    " " +
+    (p.variant || "") +
+    " (código " +
+    p.sku +
+    "). ¿Pueden confirmar disponibilidad, condición, garantía y precio final?";
+  $("#dT").textContent = p.brand + " " + p.model;
+  $("#dBody").innerHTML =
+    '<p class="vr">' +
+    esc(p.variant || "Variante por confirmar") +
+    '</p><div class="pr">' +
+    money(p.price) +
+    "<small>Confirmar precio final</small></div><div class=\"dl\"><div><small>Código</small>" +
+    esc(p.sku) +
+    "</div><div><small>Condición</small>" +
+    esc(COND[p.cond] || p.cond) +
+    "</div><div><small>Existencias registradas</small>" +
+    esc(p.qty) +
+    "</div><div><small>Garantía</small>" +
+    esc(p.warranty || "Por confirmar") +
+    "</div></div>" +
+    (p.notes ? "<p>" + esc(p.notes) + "</p>" : "") +
+    '<p class="small">La ficha no reserva el equipo. Confirma condición, IMEI, garantía, entrega y precio final por WhatsApp antes de pagar.</p><div class="row">' +
+    waBtns(t) +
+    "</div>";
+  $("#dlg").showModal();
+}
+
+function renderShowroom() {
+  const s = CONFIG.showroom;
+  $("#shAddr").textContent = s.address || "";
+  $("#shAddr").hidden = !s.address;
+  $("#shMedia").innerHTML = s.media
+    .filter((m) => okUrl(m.src))
+    .map(
+      (m) =>
+        "<figure>" +
+        (m.type === "video"
+          ? '<video controls preload="none" playsinline src="' + esc(m.src) + '"></video>'
+          : '<img loading="lazy" src="' + esc(m.src) + '" alt="' + esc(m.caption || "Showroom DyTech") + '">') +
+        (m.caption ? "<figcaption>" + esc(m.caption) + "</figcaption>" : "") +
+        "</figure>"
+    )
+    .join("");
+}
+
+/* Eventos */
+document.addEventListener("click", (e) => {
+  const d = e.target.closest("[data-d]");
+  if (d) openDetail(d.dataset.d);
+  const c = e.target.closest("[data-close]");
+  if (c) c.closest("dialog").close();
+  if (e.target.tagName === "DIALOG") e.target.close();
+  if (e.target.id === "retry") loadCatalog();
+});
+["q", "fb", "fc", "fs", "fo"].forEach((id) => $("#" + id).addEventListener("input", render));
+$("#clr").addEventListener("click", () => {
+  ["q", "fb", "fc", "fs"].forEach((id) => ($("#" + id).value = ""));
+  $("#fo").value = "";
+  render();
+});
+
+function route() {
+  const m = location.hash.match(/^#producto=(.+)$/);
+  if (m) {
+    try {
+      openDetail(decodeURIComponent(m[1]));
+    } catch (_) {}
+  }
+}
+addEventListener("hashchange", route);
+
+$$("[data-wa]").forEach((el) => (el.innerHTML = waBtns(el.dataset.wa)));
+$("#nums").innerHTML = CONFIG.wa.map((w) => "<li><b>" + esc(w.label) + ":</b> " + esc(w.show) + "</li>").join("");
+$("#yr").textContent = new Date().getFullYear();
+
+const io = new IntersectionObserver(
+  (es) =>
+    es.forEach((e) => {
+      if (e.isIntersecting) {
+        $$(".nav a").forEach((a) => a.removeAttribute("aria-current"));
+        const a = $('.nav a[href="#' + e.target.id + '"]');
+        if (a) a.setAttribute("aria-current", "true");
+      }
+    }),
+  { rootMargin: "-45% 0px -50% 0px" }
+);
+$$("main section[id]").forEach((s) => io.observe(s));
+
+applyModules();
+renderShowroom();
+render();
+loadCatalog();
+route();
+</script>
+</body>
+</html>
