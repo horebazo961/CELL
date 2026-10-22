@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#176B63">
+<meta name="description" content="DyTech: catálogo de tecnología con información clara. Consulta por WhatsApp; condiciones finales se confirman antes de comprar.">
+<title>DyTech | Tecnología para tu vida</title>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#222A2A;--ink-soft:#465451;--paper:#F5F1E8;--surface:#fff;
+  --teal:#176B63;--teal-dark:#11564f;--teal-pale:#e5f1ed;
+  --muted:#687570;--line:#dce2dc;
+  --warning-bg:#fff4df;--warning-ink:#76500a;
+  --radius:18px;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55}
+button,input,select{font:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid #75bdb0;outline-offset:3px}
+.wrap{width:min(1160px,calc(100% - 36px));margin-inline:auto}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(245,241,232,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:0}
+.brand-mark{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:var(--teal);color:#fff;font-size:.95rem;font-weight:900;letter-spacing:-.04em}
+.brand-name{display:block;font-weight:900;letter-spacing:.12em;font-size:1.05rem;line-height:1.15}
+.brand-sub{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.07em;margin-top:4px}
+.nav{display:flex;align-items:center;gap:22px}
+.nav a{text-decoration:none;font-size:.9rem;font-weight:650;color:var(--ink-soft)}
+.nav a:hover{color:var(--teal)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:12px;text-decoration:none;font-weight:750;cursor:pointer;transition:background .15s,transform .15s,border-color .15s;background:var(--teal);color:#fff}
+.btn:hover:not(:disabled){background:var(--teal-dark);transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.sec{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn.sec:hover:not(:disabled){background:#f7f9f7}
+.btn.quiet{background:transparent;border-color:var(--line);color:var(--ink)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(118deg,#202A29 0%,#203D39 62%,#176B63 100%);color:#fff}
+.hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid #ffffff22;border-radius:50%;right:-110px;top:-180px;box-shadow:0 0 0 45px #ffffff08,0 0 0 95px #ffffff06;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.35fr .65fr;gap:42px;align-items:center;padding:76px 0 80px}
+.eyebrow,.kicker{font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;font-weight:850}
+.eyebrow{color:#9ad8cc}
+.hero h1{max-width:760px;font-size:clamp(2.4rem,5.2vw,4.2rem);letter-spacing:-.06em;line-height:1.02;margin:13px 0 20px}
+.hero p{max-width:640px;color:#e0e9e5;font-size:1.06rem;margin:0 0 25px}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+.hero .btn.sec{background:#fff;color:#20302d;border-color:#fff}
+.hero-note{padding:23px;border:1px solid #ffffff35;border-radius:20px;background:#ffffff0c}
+.hero-note strong{display:block;font-size:1rem;margin-bottom:7px}
+.hero-note p{font-size:.87rem;margin:0;color:#e0e9e5}
+.hero-note hr{border:0;border-top:1px solid #ffffff2b;margin:17px 0}
+.section{padding:58px 0}
+.section-head{margin-bottom:22px}
+.kicker{color:var(--teal)}
+.section-head h2{font-size:clamp(1.65rem,3vw,2.25rem);letter-spacing:-.045em;line-height:1.1;margin:7px 0}
+.section-head p{margin:0;color:var(--muted);max-width:680px}
+.catalog-switch{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.catalog-switch button{min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:750;cursor:pointer}
+.catalog-switch button[aria-selected="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tools{display:grid;grid-template-columns:minmax(180px,1.6fr) repeat(3,minmax(120px,1fr));gap:12px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:16px}
+.field-label{display:block;font-size:.78rem;font-weight:750;margin-bottom:6px}
+.field{width:100%;min-height:44px;padding:10px 12px;border:1px solid #cfd8d1;border-radius:10px;background:#fff}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 16px;color:var(--muted);font-size:.87rem;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;list-style:none;padding:0;margin:0}
+.card{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 4px 18px #1d302a08}
+.card-vis{height:180px;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 38%,#fff 0,#e6efea 70%,#dbe6df 100%)}
+.card-vis img{width:100%;height:100%;object-fit:contain;padding:16px}
+.ph{width:88px;height:148px;border:4px solid #263431;border-radius:20px;background:linear-gradient(145deg,#a4c9bd,#254d48 58%,#152624);box-shadow:0 16px 25px #162b2630;position:relative;transform:rotate(-6deg)}
+.ph:before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:28px;height:6px;background:#172320;border-radius:10px}
+.ph span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.1em}
+.card-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.maker{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:850;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:100px;background:var(--teal-pale);color:#185d51;font-size:.69rem;font-weight:800}
+.card-body h3{font-size:1.1rem;letter-spacing:-.025em;margin:8px 0 2px}
+.variant{margin:0;color:var(--muted);font-size:.86rem}
+.specs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.spec{background:#f1f4f0;border-radius:7px;padding:4px 7px;color:#46534d;font-size:.72rem}
+.price{font-size:1.45rem;font-weight:900;letter-spacing:-.045em;margin-top:auto;padding-top:10px}
+.price small{display:block;font-size:.72rem;font-weight:600;color:var(--muted);margin-top:2px}
+.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.card-actions .btn{padding:10px 8px;font-size:.82rem}
+.empty,.loading{padding:42px 20px;border:1px dashed #c7d3cb;background:#fff;border-radius:17px;text-align:center}
+.empty h3,.loading strong{margin:0 0 8px}
+.empty p,.loading p{color:var(--muted);margin:0 0 14px}
+.notice{padding:12px 14px;border-radius:11px;background:var(--teal-pale);color:#20594f;border:1px solid #d0e6dc;font-size:.84rem;margin:16px 0 0}
+.notice.warn{background:var(--warning-bg);color:var(--warning-ink);border-color:#efdfb7}
+.trust-band{background:#fff;border-block:1px solid var(--line)}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:28px 0}
+.trust-item{display:flex;gap:13px;align-items:flex-start}
+.trust-icon{flex:0 0 40px;height:40px;display:grid;place-items:center;border-radius:13px;background:var(--teal-pale);color:var(--teal);font-weight:900}
+.trust-item strong{display:block;font-size:.91rem}
+.trust-item p{margin:4px 0 0;color:var(--muted);font-size:.82rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.info-card{padding:24px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.info-card h3{margin:0 0 8px}
+.info-card p{font-size:.9rem;color:#59665f}
+.footer{padding:33px 0;background:#202a29;color:#fff}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer p{margin:5px 0;color:#c4cfca;font-size:.82rem}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer a{font-size:.82rem;color:#e4ece7}
+.legal p{color:var(--muted);max-width:850px}
+.backdrop{display:none;position:fixed;inset:0;z-index:80;align-items:center;justify-content:center;padding:16px;background:#111b19b8;overflow-y:auto}
+.backdrop.open{display:flex}
+.modal{width:min(760px,100%);max-height:92vh;overflow:auto;border-radius:20px;background:#fff;box-shadow:0 25px 90px #0004}
+.modal-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:#fff}
+.modal-head h2{margin:0;font-size:1.1rem}
+.icon-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:1.3rem;cursor:pointer}
+.modal-body{padding:22px}
+.detail{display:grid;grid-template-columns:.75fr 1.25fr;gap:22px}
+.detail-vis{min-height:260px;border-radius:15px;background:radial-gradient(circle,#f8fbf8,#dce8e0);display:grid;place-items:center}
+.detail-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
+.detail-list div{background:#f2f5f1;padding:10px;border-radius:10px}
+.detail-list small{display:block;color:var(--muted);font-size:.71rem}
+.detail-list strong{font-size:.85rem}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;padding:58px 0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.tools .search{grid-column:1/-1}.nav{gap:13px}}
+@media(max-width:620px){.wrap{width:calc(100% - 26px)}.nav{display:none}.hero-inner{padding:43px 0}.hero h1{font-size:2.35rem}.section{padding:42px 0}.grid{grid-template-columns:1fr}.tools{grid-template-columns:1fr}.trust-grid,.info-grid,.detail{grid-template-columns:1fr}.footer-inner{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#inicio" aria-label="DyTech, inicio">
+      <span class="brand-mark" aria-hidden="true">Dy</span>
+      <span><span class="brand-name">DyTech</span><span class="brand-sub">TECNOLOGÍA PARA TU VIDA</span></span>
+    </a>
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="#catalogo">Catálogo</a><a href="#confianza">Compra informada</a><a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn" href="#catalogo">Ver catálogo <span aria-hidden="true">↘</span></a>
+  </div>
+</header>
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="eyebrow">Tecnología · Ecuador</div>
+        <h1>Catálogo claro.<br>Compra con información.</h1>
+        <p>Explora equipos y accesorios publicados. Precio, disponibilidad y condiciones finales se confirman con un asesor antes de pagar.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#catalogo">Abrir catálogo <span aria-hidden="true">→</span></a>
+          <a class="btn sec" href="#confianza">Cómo comprar</a>
+        </div>
+      </div>
+      <aside class="hero-note">
+        <strong>Decide con información publicada</strong>
+        <p>No inventamos precios ni existencias en esta página. El listado se construye desde el inventario publicado del negocio.</p>
+        <hr>
+        <p>Abrir WhatsApp no reserva ni compra. Un asesor confirma condición, garantía y precio final.</p>
+      </aside>
+    </div>
+  </section>
+  <section class="section" id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Catálogo DyTech</div>
+        <h2>Celulares y accesorios</h2>
+        <p>Filtra, compara y consulta. Solo se muestran ítems publicados con existencias registradas mayores a cero.</p>
+      </div>
+      <div class="catalog-switch" role="tablist" aria-label="Categorías">
+        <button type="button" role="tab" id="tab-celulares" aria-selected="true" data-cat="celulares">Celulares</button>
+        <button type="button" role="tab" id="tab-accesorios" aria-selected="false" data-cat="accesorios">Accesorios</button>
+      </div>
+      <div class="tools" id="toolsCel" role="search" aria-label="Filtros de celulares">
+        <div class="search"><label class="field-label" for="q">Buscar</label><input class="field" id="q" type="search" placeholder="Marca, modelo o código" autocomplete="off"></div>
+        <div><label class="field-label" for="brand">Marca</label><select class="field" id="brand"><option value="">Todas</option></select></div>
+        <div><label class="field-label" for="cond">Condición</label><select class="field" id="cond"><option value="">Todas</option><option value="nuevo">Nuevo</option><option value="usado">Usado</option><option value="caja_abierta">Caja abierta</option><option value="reacondicionado">Reacondicionado</option></select></div>
+        <div><label class="field-label" for="sort">Ordenar</label><select class="field" id="sort"><option value="rel">Relevancia</option><option value="pasc">Precio ↑</option><option value="pdesc">Precio ↓</option><option value="name">Nombre A–Z</option></select></div>
+      </div>
+      <div class="tools hidden" id="toolsAcc" role="search" aria-label="Filtros de accesorios">
+        <div class="search"><label class="field-label" for="qAcc">Buscar</label><input class="field" id="qAcc" type="search" placeholder="Título o categoría" autocomplete="off"></div>
+        <div><label class="field-label" for="sortAcc">Ordenar</label><select class="field" id="sortAcc"><option value="rel">Relevancia</option><option value="pasc">Precio ↑</option><option value="pdesc">Precio ↓</option></select></div>
+      </div>
+      <div class="meta"><span id="count" aria-live="polite">Cargando…</span><button class="btn quiet" type="button" id="clearFilters">Limpiar filtros</button></div>
+      <div class="loading" id="loading"><strong>Cargando catálogo</strong><p class="muted">…</p></div>
+      <ul class="grid hidden" id="grid" aria-label="Productos"></ul>
+      <div class="empty hidden" id="empty"><h3 id="emptyTitle">Sin resultados</h3><p id="emptyText">No hay ítems publicados con esos criterios.</p><button class="btn sec" type="button" id="emptyClear">Limpiar filtros</button></div>
+      <p class="notice" id="notice">Disponibilidad y precio final se confirman con DyTech antes del pago. No se muestra la hoja de cálculo completa ni columnas internas.</p>
+      <p class="notice warn hidden" id="errNotice" role="status"></p>
+    </div>
+  </section>
+  <div class="trust-band" id="confianza"><div class="wrap trust-grid">
+    <div class="trust-item"><span class="trust-icon" aria-hidden="true">✓</span><div><strong>Datos del inventario</strong><p>Las fichas se arman desde el listado publicado. No hay productos de relleno ni vista cruda del Sheet.</p></div></div>
+    <div class="trust-item"><span class="trust-icon" aria-hidden="true">↗</span><div><strong>Consulta antes de pagar</strong><p>Confirma stock, condición, garantía y entrega con el asesor.</p></div></div>
+    <div class="trust-item"><span class="trust-icon" aria-hidden="true">◇</span><div><strong>Sin urgencia artificial</strong><p>Sin reseñas inventadas ni contadores falsos de escasez.</p></div></div>
+  </div></div>
+  <section class="section" id="contacto"><div class="wrap">
+    <div class="section-head"><div class="kicker">Atención</div><h2>Antes de elegir, pregunta</h2><p>La consulta por WhatsApp no reserva ni cierra la compra.</p></div>
+    <div class="info-grid">
+      <article class="info-card"><h3>Consulta comercial</h3><p>Escríbenos con el modelo o código del equipo. Un asesor valida condición, garantía y precio final.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px">
+          <a class="btn" href="https://wa.me/593993017483?text=Hola%2C%20quiero%20consultar%20el%20cat%C3%A1logo%20DyTech." target="_blank" rel="noopener noreferrer">WhatsApp principal</a>
+          <a class="btn sec" href="https://wa.me/593995792922?text=Hola%2C%20quiero%20consultar%20el%20cat%C3%A1logo%20DyTech." target="_blank" rel="noopener noreferrer">WhatsApp alterno</a>
+        </div>
+        <p class="muted" style="font-size:.82rem;margin-top:12px">+593 99 301 7483 · +593 99 579 2922</p>
+      </article>
+      <article class="info-card" id="politicas"><h3>Condiciones de compra</h3><p>Métodos de pago, entrega, garantía y devoluciones se confirman en la conversación comercial. Esta página no sustituye esa confirmación.</p></article>
+    </div>
+  </div></section>
+  <section class="section" id="privacidad" style="padding-top:0"><div class="wrap legal">
+    <div class="kicker">Privacidad</div><h2>Uso responsable de datos</h2>
+    <p>No creamos cuentas ni pedimos datos personales para ver el catálogo. Si escribes por WhatsApp, el tratamiento depende de lo que compartas en ese canal. DyTech debe mantener un aviso de privacidad alineado a la normativa ecuatoriana aplicable.</p>
+  </div></section>
+</main>
+<footer class="footer"><div class="wrap footer-inner">
+  <div><strong>DyTech</strong><p>Tecnología para tu vida · Ecuador</p><p>Información comercial sujeta a confirmación del vendedor.</p></div>
+  <div class="footer-links"><a href="#catalogo">Catálogo</a><a href="#politicas">Condiciones</a><a href="#privacidad">Privacidad</a><a href="#inicio">Volver arriba ↑</a></div>
+</div></footer>
+<div class="backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal"><div class="modal-head"><h2 id="modalTitle">Ficha</h2><button class="icon-btn" type="button" data-close aria-label="Cerrar">×</button></div><div class="modal-body" id="modalBody"></div></div>
+</div>
+<script>
+"use strict";
+/** DyTech: cards desde CSV (proxy /api/catalog o CSV público). NUNCA iframe del Sheet completo. */
+var WA="593993017483";
+var SOURCES={
+  celulares:{proxy:"/api/catalog?tipo=celulares",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRu-3dyDh5xRn7UOp14h3iQG9NwXiVjh4eeyOryAoNMh8T6cU8BMOaSk6vT9Cmxe3FFHgE9HuRbxjBb/pub?gid=348736088&single=true&output=csv"},
+  accesorios:{proxy:"/api/catalog?tipo=accesorios",csv:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRu-3dyDh5xRn7UOp14h3iQG9NwXiVjh4eeyOryAoNMh8T6cU8BMOaSk6vT9Cmxe3FFHgE9HuRbxjBb/pub?gid=1739504398&single=true&output=csv"}
+};
+var COND_LABEL={nuevo:"Nuevo",usado:"Usado",caja_abierta:"Caja abierta","caja abierta":"Caja abierta",reacondicionado:"Reacondicionado"};
+var state={cat:"celulares",phones:[],acc:[],error:""};
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]})}
+function money(n){var v=Number(String(n).replace(",","."));if(!isFinite(v))return "—";return new Intl.NumberFormat("es-EC",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(v)}
+function isTrue(v){var t=String(v||"").trim().toLowerCase();return t==="true"||t==="1"||t==="si"||t==="sí"||t==="yes"}
+function parseCSV(text){var rows=[],row=[],cell="",q=false,i,ch;text=String(text||"").replace(/^\uFEFF/,"");for(i=0;i<text.length;i++){ch=text[i];if(q){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++}else if(ch==='"')q=false;else cell+=ch}else{if(ch==='"'&&cell==="")q=true;else if(ch===","){row.push(cell);cell=""}else if(ch==="\n"){row.push(cell.replace(/\r$/,""));rows.push(row);row=[];cell=""}else cell+=ch}}if(cell.length||row.length){row.push(cell.replace(/\r$/,""));rows.push(row)}return rows.filter(function(r){return r.some(function(c){return String(c).trim()!==""})})}
+function rowsToObjects(text){var rows=parseCSV(text);if(rows.length<2)return[];var headers=rows[0].map(function(h){return String(h||"").replace(/^\uFEFF/,"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"_")});return rows.slice(1).map(function(r){var o={};headers.forEach(function(h,i){o[h]=String(r[i]==null?"":r[i]).trim()});return o})}
+function publicPhone(o){var price=Number(String(o.precio||"").replace(",","."));var qty=Number(o.cantidad);return isTrue(o.publicado)&&isFinite(qty)&&qty>0&&isFinite(price)&&price>=0}
+function publicAcc(o){var price=Number(String(o.precio||"").replace(",","."));return isTrue(o.publicado)&&isFinite(price)&&price>=0}
+function waLink(text){return "https://wa.me/"+WA+"?text="+encodeURIComponent(text)}
+function phoneMsg(o){return "Hola, me interesa "+(o.marca||"")+" "+(o.modelo||"")+" "+(o.variante||"")+". Código: "+(o.sku||"")+". ¿Pueden confirmar disponibilidad, condición, garantía y precio final?"}
+function accMsg(o){return "Hola, me interesa el accesorio: "+(o.titulo||o.id||"")+". ¿Pueden confirmar disponibilidad y precio final?"}
+function visual(url,label){if(url&&/^https:\/\//i.test(url))return '<div class="card-vis"><img loading="lazy" referrerpolicy="no-referrer" alt="'+esc(label)+'" src="'+esc(url)+'" onerror="this.parentNode.innerHTML=\'<div class=ph><span>Dy</span></div>\'"></div>';return '<div class="card-vis" aria-hidden="true"><div class="ph"><span>Dy</span></div></div>'}
+function phoneCard(o){var cond=COND_LABEL[String(o.condicion||"").toLowerCase()]||(o.condicion||"Condición n/d");var img=o.fotos_urls||o.imagen_url||o.imagen||"";return '<li class="card">'+visual(img,o.marca+" "+o.modelo)+'<div class="card-body"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="maker">'+esc(o.marca)+'</span><span class="pill">Por confirmar</span></div><h3>'+esc(o.modelo)+'</h3><p class="variant">'+esc(o.variante||"—")+'</p><div class="specs"><span class="spec">'+esc(cond)+'</span>'+(o.garantia?'<span class="spec">'+esc(o.garantia)+'</span>':"")+'</div><div class="price">'+money(o.precio)+'<small>USD · confirmar precio final</small></div><div class="card-actions"><button class="btn sec" type="button" data-phone="'+esc(o.sku)+'">Ver ficha</button><a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(waLink(phoneMsg(o)))+'">Consultar</a></div></div></li>'}
+function accCard(o){return '<li class="card">'+visual("",o.titulo)+'<div class="card-body"><span class="maker">'+esc(o.categoria||"Accesorio")+'</span><h3>'+esc(o.titulo)+'</h3><p class="variant">'+esc(o.subtitulo||"")+'</p><div class="price">'+money(o.precio)+'<small>USD · confirmar precio final</small></div><div class="card-actions" style="grid-template-columns:1fr"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(waLink(accMsg(o)))+'">Consultar</a></div></div></li>'}
+function fillBrands(){var sel=$("brand"),cur=sel.value,brands=[];state.phones.filter(publicPhone).forEach(function(o){if(o.marca&&brands.indexOf(o.marca)<0)brands.push(o.marca)});brands.sort(function(a,b){return a.localeCompare(b,"es")});sel.innerHTML='<option value="">Todas</option>'+brands.map(function(b){return '<option value="'+esc(b)+'">'+esc(b)+'</option>'}).join("");if(brands.indexOf(cur)>=0)sel.value=cur}
+function filteredPhones(){var q=$("q").value.trim().toLowerCase(),brand=$("brand").value,cond=$("cond").value,sort=$("sort").value;var list=state.phones.filter(publicPhone).filter(function(o){var hay=[o.sku,o.marca,o.modelo,o.variante].join(" ").toLowerCase();var c=String(o.condicion||"").toLowerCase().replace(/\s+/g,"_");return(!q||hay.indexOf(q)>=0)&&(!brand||o.marca===brand)&&(!cond||c===cond||c.replace("_"," ")===cond.replace("_"," "))});if(sort==="pasc")list.sort(function(a,b){return Number(String(a.precio).replace(",","."))-Number(String(b.precio).replace(",","."))});if(sort==="pdesc")list.sort(function(a,b){return Number(String(b.precio).replace(",","."))-Number(String(a.precio).replace(",","."))});if(sort==="name")list.sort(function(a,b){return(a.marca+a.modelo).localeCompare(b.marca+b.modelo,"es")});return list}
+function filteredAcc(){var q=$("qAcc").value.trim().toLowerCase(),sort=$("sortAcc").value;var list=state.acc.filter(publicAcc).filter(function(o){var hay=[o.id,o.titulo,o.subtitulo,o.categoria].join(" ").toLowerCase();return!q||hay.indexOf(q)>=0});if(sort==="pasc")list.sort(function(a,b){return Number(a.precio)-Number(b.precio)});if(sort==="pdesc")list.sort(function(a,b){return Number(b.precio)-Number(a.precio)});return list}
+function render(){var grid=$("grid"),empty=$("empty"),loading=$("loading");loading.classList.add("hidden");if(state.cat==="celulares"){fillBrands();var list=filteredPhones();$("count").textContent=list.length+(list.length===1?" equipo publicado":" equipos publicados");grid.innerHTML=list.map(phoneCard).join("");grid.classList.toggle("hidden",list.length===0);empty.classList.toggle("hidden",list.length!==0);if(!list.length){$("emptyTitle").textContent=state.error?"No se pudo cargar el catálogo":"Sin coincidencias";$("emptyText").textContent=state.error||"Prueba otros filtros o vuelve más tarde."}}else{var listA=filteredAcc();$("count").textContent=listA.length+(listA.length===1?" accesorio publicado":" accesorios publicados");grid.innerHTML=listA.map(accCard).join("");grid.classList.toggle("hidden",listA.length===0);empty.classList.toggle("hidden",listA.length!==0);if(!listA.length){$("emptyTitle").textContent=state.error?"No se pudo cargar el catálogo":"Sin coincidencias";$("emptyText").textContent=state.error||"Prueba otra búsqueda."}}}
+function showPhone(sku){var o=state.phones.find(function(x){return x.sku===sku});if(!o)return;var cond=COND_LABEL[String(o.condicion||"").toLowerCase()]||o.condicion||"—";var img=o.fotos_urls||o.imagen_url||"";$("modalTitle").textContent=(o.marca||"")+" "+(o.modelo||"");$("modalBody").innerHTML='<div class="detail">'+(img&&/^https:\/\//i.test(img)?'<div class="detail-vis"><img style="max-width:100%;max-height:280px;object-fit:contain" src="'+esc(img)+'" alt=""></div>':'<div class="detail-vis"><div class="ph"><span>Dy</span></div></div>')+'<div><span class="maker">'+esc(o.marca)+'</span><h2 style="margin:8px 0;font-size:1.6rem;letter-spacing:-.04em">'+esc(o.modelo)+'</h2><p class="muted">'+esc(o.variante||"")+'</p><div class="price" style="margin:12px 0">'+money(o.precio)+'<small>Confirmar precio final</small></div><div class="detail-list"><div><small>Código</small><strong>'+esc(o.sku)+'</strong></div><div><small>Condición</small><strong>'+esc(cond)+'</strong></div><div><small>Existencias registradas</small><strong>'+esc(o.cantidad)+'</strong></div><div><small>Garantía</small><strong>'+esc(o.garantia||"Por confirmar")+'</strong></div></div><p><b>Notas:</b> '+esc(o.notas_condicion||"Sin notas publicadas.")+'</p><p class="notice">La ficha no confirma existencias en tiempo real. Solicita confirmación de condición, garantía, entrega y precio final.</p><a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(waLink(phoneMsg(o)))+'">Consultar por WhatsApp</a></div></div>';$("modal").classList.add("open");document.body.style.overflow="hidden"}
+function closeModal(){$("modal").classList.remove("open");document.body.style.overflow=""}
+function setCat(cat){state.cat=cat;document.querySelectorAll(".catalog-switch [role=tab]").forEach(function(t){t.setAttribute("aria-selected",t.getAttribute("data-cat")===cat?"true":"false")});$("toolsCel").classList.toggle("hidden",cat!=="celulares");$("toolsAcc").classList.toggle("hidden",cat!=="accesorios");render()}
+async function fetchText(url){var res=await fetch(url,{cache:"no-store",headers:{Accept:"text/csv,text/plain,*/*"}});if(!res.ok)throw new Error("HTTP "+res.status);return res.text()}
+async function loadSource(key){var s=SOURCES[key];try{return await fetchText(s.proxy)}catch(e1){return await fetchText(s.csv)}}
+async function boot(){$("loading").classList.remove("hidden");$("grid").classList.add("hidden");$("empty").classList.add("hidden");$("errNotice").classList.add("hidden");state.error="";try{var tCel=await loadSource("celulares");state.phones=rowsToObjects(tCel);try{state.acc=rowsToObjects(await loadSource("accesorios"))}catch(eA){state.acc=[]}render()}catch(err){state.error="No fue posible leer el inventario. En archivo local el navegador puede bloquear el CSV (CORS). En Vercel usa /api/catalog.";$("errNotice").textContent=state.error+" Detalle: "+(err&&err.message?err.message:err);$("errNotice").classList.remove("hidden");$("loading").classList.add("hidden");$("empty").classList.remove("hidden");$("emptyTitle").textContent="Catálogo no disponible";$("emptyText").textContent=state.error;$("count").textContent="0 ítems"}}
+document.querySelectorAll(".catalog-switch [role=tab]").forEach(function(tab){tab.addEventListener("click",function(){setCat(tab.getAttribute("data-cat"))})});
+["q","brand","cond","sort","qAcc","sortAcc"].forEach(function(id){var el=$(id);if(el)el.addEventListener("input",render)});
+$("clearFilters").addEventListener("click",function(){$("q").value="";$("brand").value="";$("cond").value="";$("sort").value="rel";$("qAcc").value="";$("sortAcc").value="rel";render()});
+$("emptyClear").addEventListener("click",function(){$("clearFilters").click()});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-phone]");if(b)showPhone(b.getAttribute("data-phone"));if(e.target.closest("[data-close]")||e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()});
+boot();
+</script>
+</body>
+</html>
