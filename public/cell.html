@@ -66,7 +66,6 @@ label.l{display:block;font-size:.78rem;font-weight:700;color:var(--plata);margin
 .steps{counter-reset:s;list-style:none;padding:0;margin:0 0 20px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 .steps li{counter-increment:s;background:var(--g1);border:1px solid var(--ln);border-radius:var(--r);padding:16px 16px 16px 58px;position:relative}
 .steps li:before{content:counter(s);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--teal);color:var(--g0);font-weight:800;display:grid;place-items:center}
-.operator-links{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:20px 0}.operator-links a{display:flex;flex-direction:column;gap:3px;background:var(--g1);border:1px solid var(--ln);border-radius:var(--r);padding:14px;text-decoration:none}.operator-links a:hover{border-color:var(--teal)}.operator-links strong{color:var(--tl)}.operator-links span{color:var(--p2);font-size:.84rem}
 .soon{display:none;place-items:center;text-align:center;gap:8px;padding:44px 20px;border:1px dashed var(--p2);border-radius:var(--r)}.soon strong{font-size:1.25rem}.soon p{margin:0;color:var(--p2)}
 [data-state=hide]{display:none}[data-state=soon] .mod{display:none}[data-state=soon] .soon{display:grid}
 .media{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.media figure{margin:0}.media img,.media video{width:100%;border-radius:var(--r);background:var(--g3)}.media figcaption{color:var(--p2);font-size:.88rem;margin-top:4px}
@@ -85,7 +84,7 @@ dialog{background:var(--g2);color:var(--tx);border:1px solid var(--p2);border-ra
 <a class="skip" href="#catalogo">Saltar al contenido</a>
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="#inicio" aria-label="DyTech, inicio"><b>DyTech</b><small>Tecnolog��a de calidad a tu alcance</small></a>
+    <a class="brand" href="#inicio" aria-label="DyTech, inicio"><b>DyTech</b><small>Tecnología de calidad a tu alcance</small></a>
     <div class="row" data-wa="Hola DyTech, quiero información."></div>
   </div>
   <nav class="wrap nav" aria-label="Secciones de la página">
@@ -157,21 +156,15 @@ dialog{background:var(--g2);color:var(--tx);border:1px solid var(--p2);border-ra
 <section id="compra" class="sec alt" data-module="compra" data-label="Compra segura">
   <div class="wrap mod">
     <h2>Compra segura, paso a paso</h2>
-    <p class="lead">Verifica la legalidad, homologación y estado del equipo antes de concretar la compra o escribir por WhatsApp para confirmar stock y precio final.</p>
+    <p class="lead">Estas verificaciones toman pocos minutos y ayudan a evitar equipos reportados o adulterados.</p>
     <ol class="steps">
-      <li>Marca <b>*#06#</b> en el celular y anota cada IMEI que aparece. En equipos dual SIM, revisa los dos.</li>
-      <li>Compáralo con el IMEI de la caja, factura y bandeja SIM. Todos deben coincidir.</li>
-      <li>Consulta el IMEI en los canales oficiales de las operadoras móviles autorizadas en Ecuador y confirma que no tenga reporte de robo, pérdida o bloqueo.</li>
-      <li>Verifica también la homologación del modelo en el canal oficial disponible y pide factura y garantía por escrito antes de pagar.</li>
+      <li>Marca <b>*#06#</b> en el celular y anota el IMEI que aparece.</li>
+      <li>Compáralo con el de la caja o la bandeja SIM: deben coincidir.</li>
+      <li>Consúltalo en <b>Tu Celular Legal</b> de ARCOTEL (homologación y reportes).</li>
+      <li>Pide factura y garantía por escrito antes de pagar.</li>
     </ol>
-    <p class="small">Antes de comprar o escribirnos por WhatsApp, revisa el IMEI en todas las operadoras que correspondan. Si aparece reportado como robado, perdido o bloqueado en cualquiera de ellas, no concretes la compra y solicita una aclaración formal.</p>
-    <div class="operator-links" aria-label="Canales oficiales de consulta de las operadoras">
-      <a href="https://www.claro.com.ec/personas/servicios/servicios-moviles/consulta-imei/" target="_blank" rel="noopener noreferrer"><strong>Claro Ecuador</strong><span>Consulta y bloqueo de IMEI</span></a>
-      <a href="https://www.movistar.com.ec/servicios/consulta-imei" target="_blank" rel="noopener noreferrer"><strong>Movistar / Tigo Ecuador</strong><span>Canal oficial de servicios móviles</span></a>
-      <a href="https://www.cnt.com.ec/" target="_blank" rel="noopener noreferrer"><strong>CNT EP</strong><span>Portal oficial de la operadora</span></a>
-      <a href="https://www.tuenti.ec/" target="_blank" rel="noopener noreferrer"><strong>Tuenti Ecuador</strong><span>Ayuda y atención móvil oficial</span></a>
-    </div>
-    <div class="row"><a class="btn" href="https://www.claro.com.ec/personas/servicios/servicios-moviles/consulta-imei/" target="_blank" rel="noopener noreferrer">Consultar IMEI en una operadora</a></div>
+    <p class="small">Si el equipo aparece reportado, no lo compres. DyTech confirma condición y documentos en la atención comercial.</p>
+    <div class="row"><a class="btn" id="arc" href="https://tucelularlegal.arcotel.gob.ec/" target="_blank" rel="noopener noreferrer">Abrir Tu Celular Legal</a></div>
   </div>
 </section>
 
@@ -236,6 +229,7 @@ const CONFIG = {
   ],
   csvProxy: "/api/catalog?tipo=celulares",
   csvPublic: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRu-3dyDh5xRn7UOp14h3iQG9NwXiVjh4eeyOryAoNMh8T6cU8BMOaSk6vT9Cmxe3FFHgE9HuRbxjBb/pub?gid=348736088&single=true&output=csv",
+  arcotelUrl: "https://tucelularlegal.arcotel.gob.ec/",
   showroom: { address: "", media: [] },
   modules: {
     catalogo: { on: true, off: "hide" },
@@ -578,7 +572,7 @@ function openDetail(sku) {
     esc(p.warranty || "Por confirmar") +
     "</div></div>" +
     (p.notes ? "<p>" + esc(p.notes) + "</p>" : "") +
-    '<p class="small">La ficha no reserva el equipo. Antes de escribir por WhatsApp para confirmar stock y precio final, verifica el IMEI, la homologación y que no tenga reporte de robo o bloqueo en Claro, Movistar/Tigo, CNT EP y Tuenti.</p><div class="row">' +
+    '<p class="small">La ficha no reserva el equipo. Confirma condición, IMEI, garantía, entrega y precio final por WhatsApp antes de pagar.</p><div class="row">' +
     waBtns(t) +
     "</div>";
   $("#dlg").showModal();
