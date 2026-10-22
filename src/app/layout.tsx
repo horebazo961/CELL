@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DYLAN Tecnología de calidad | Quito · Ecuador",
+  title: "DyTech | Tecnología de calidad a tu alcance",
   description:
-    "Equipos verificados, accesorios y personalización. Consulta por WhatsApp.",
+    "Catálogo de celulares DyTech con información clara, atención personalizada y consulta directa por WhatsApp.",
 };
 
 export default function RootLayout({
