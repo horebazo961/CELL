@@ -22,8 +22,7 @@ const phones = [
 ];
 
 /**
- * Foto de prueba (Unsplash, licencia libre) hasta integrar foto real del equipo.
- * Cuando tengas la tuya: súbela a public/hero-phone.webp y cambia a "/hero-phone.webp".
+ * Foto de prueba (Unsplash) hasta foto real en public/hero-phone.webp
  */
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85";
@@ -81,34 +80,37 @@ export function CatalogPlatform() {
           </a>
           <nav aria-label="Navegación principal">
             <a href="#catalogo">Catálogo</a>
-            <a href="#showroom">Showroom</a>
-            <a href="#contacto">Contacto</a>
+            <a href="#beneficios">Por qué DyTech</a>
+            <a href="#contacto">Consultar</a>
           </nav>
         </div>
       </header>
+
       <main>
+        {/* 1. Título atractivo + 3. Imagen + CTA primario */}
         <section id="inicio" className="hero">
           <div className="wrap hero-grid">
             <div className="hero-copy-block">
-              <p className="eyebrow">TECNOLOGÍA DE CALIDAD</p>
+              <p className="eyebrow">CELULARES VERIFICADOS EN QUITO</p>
               <h1>
-                Equipos que se adaptan a{" "}
-                <em>tu ritmo.</em>
+                Elige tu equipo.{" "}
+                <em>Confirma stock y precio por WhatsApp.</em>
               </h1>
               <p className="hero-trust">
                 Stock real · condición verificada · garantía incluida
               </p>
+              {/* 2. Contenido directo: reglas de la oferta en una línea */}
               <p className="hero-copy">
-                Celulares seleccionados, con precio claro y atención directa.
-                Revisa el catálogo y consulta con nuestro vendedor cuando estés
-                listo.
+                Revisa el catálogo, elige el modelo y escribe a un vendedor
+                especializado. Te confirmamos disponibilidad, condición y precio
+                final antes de cualquier pago.
               </p>
               <div className="actions">
                 <a className="btn" href="#catalogo">
-                  Explorar catálogo
+                  Ver equipos disponibles
                 </a>
                 <a className="btn sec" href="#contacto">
-                  Consultar con vendedor
+                  Escribir al vendedor
                 </a>
               </div>
             </div>
@@ -162,16 +164,33 @@ export function CatalogPlatform() {
           </div>
         </section>
 
+        {/* 2. Contenido directo ampliado: beneficios de la oferta */}
+        <section className="value-strip" aria-label="Beneficios de la oferta">
+          <div className="wrap value-strip-grid">
+            <div className="value-item">
+              <strong>1. Elige</strong>
+              <span>Revisa modelos, condición y precio en el catálogo.</span>
+            </div>
+            <div className="value-item">
+              <strong>2. Consulta</strong>
+              <span>Escribe por WhatsApp al vendedor especializado.</span>
+            </div>
+            <div className="value-item">
+              <strong>3. Confirma</strong>
+              <span>Stock, garantía y precio final antes de comprar.</span>
+            </div>
+          </div>
+        </section>
+
         <section id="catalogo" className="section">
           <div className="wrap">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">SELECCIÓN DYTECH</p>
+                <p className="eyebrow">OFERTA ACTUAL</p>
                 <h2>Celulares disponibles</h2>
                 <p>
-                  Filtra el catálogo. Cuando encuentres un equipo, consulta con
-                  nuestro vendedor especializado para confirmar stock, condición
-                  y precio final.
+                  Catálogo en tiempo real. Al encontrar un equipo, usa el botón
+                  de consulta para hablar con el vendedor y cerrar detalles.
                 </p>
               </div>
               <span className="count">{filtered.length} equipos</span>
@@ -211,39 +230,57 @@ export function CatalogPlatform() {
           </div>
         </section>
 
-        <section id="showroom" className="section section-tint">
+        {/* Banda de conversión (CTA repetido, principio landing) */}
+        <section className="convert-band" aria-label="Llamado a la acción">
+          <div className="wrap convert-band-inner">
+            <div>
+              <p className="eyebrow">SIGUIENTE PASO</p>
+              <h2 className="convert-title">¿Ya viste un equipo que te interesa?</h2>
+              <p>
+                No dejes la consulta para después. Un vendedor DyTech te responde
+                por WhatsApp con stock y precio final.
+              </p>
+            </div>
+            <a className="btn btn-lg" href="#contacto">
+              Consultar ahora
+            </a>
+          </div>
+        </section>
+
+        <section id="beneficios" className="section section-tint">
           <div className="wrap split">
             <div>
-              <p className="eyebrow">EXPERIENCIA DYTECH</p>
-              <h2>Más que un equipo.</h2>
+              <p className="eyebrow">POR QUÉ DYTECH</p>
+              <h2>Compra con información clara.</h2>
               <p>
-                Te acompañamos a elegir tecnología que realmente encaje contigo,
-                con atención cercana y respuestas claras.
+                Sin menús confusos ni promesas vacías: ves el equipo, la
+                condición y escribes directo al vendedor.
               </p>
             </div>
             <div className="feature-list">
               <p>
-                <b>01</b> Curaduría de equipos
+                <b>01</b> Stock real publicado en catálogo
               </p>
               <p>
-                <b>02</b> Información transparente
+                <b>02</b> Condición y garantía visibles
               </p>
               <p>
-                <b>03</b> Atención personalizada
+                <b>03</b> Consulta directa por WhatsApp
               </p>
             </div>
           </div>
         </section>
 
+        {/* 4+5. Captación mínima + CTA (WhatsApp = formulario de 1 paso) */}
         <section id="contacto" className="section contact">
           <div className="wrap contact-card">
             <div>
-              <p className="eyebrow">CONSULTA CON NUESTRO VENDEDOR</p>
-              <h2>¿Tienes un equipo en mente?</h2>
+              <p className="eyebrow">CONSULTA EN UN PASO</p>
+              <h2>Escribe al vendedor especializado</h2>
               <p>
-                Elige la línea con la que prefieras escribir. Un vendedor
-                especializado de DyTech te confirmará disponibilidad, condición,
-                garantía y precio final.
+                Elige la línea (Tigo o Claro). Es el único dato que necesitas:
+                abres WhatsApp y consultas disponibilidad, condición, garantía y
+                precio final.
               </p>
             </div>
             <div className="contact-numbers">
@@ -253,25 +290,34 @@ export function CatalogPlatform() {
                   key={phone.number}
                   href={whatsapp(
                     phone.number,
-                    "Hola DyTech, quiero información sobre un celular."
+                    "Hola DyTech, vi el catálogo y quiero confirmar un equipo. ¿Me ayudan con stock y precio final?"
                   )}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <span>{phone.label}</span>
                   <strong>{phone.display}</strong>
+                  <em className="contact-cta-label">Abrir WhatsApp</em>
                 </a>
               ))}
             </div>
           </div>
         </section>
       </main>
+
       <footer>
         <div className="wrap footer-inner">
           <span>© {new Date().getFullYear()} DyTech</span>
           <a href="#inicio">Volver arriba</a>
         </div>
       </footer>
+
+      {/* CTA fijo móvil — refuerzo de conversión */}
+      <div className="sticky-cta" role="complementary" aria-label="Consulta rápida">
+        <a className="btn" href="#contacto">
+          Consultar por WhatsApp
+        </a>
+      </div>
     </>
   );
 }
@@ -300,7 +346,7 @@ function ProductCard({ product: p }: { product: Product }) {
         <small className="muted">USD · confirmar precio final</small>
         {p.notes ? <small className="muted">{p.notes}</small> : null}
         <a className="btn" href="#contacto">
-          Consultar este equipo
+          Consultar
         </a>
       </div>
     </article>
