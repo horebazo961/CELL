@@ -110,8 +110,9 @@ export function CatalogPlatform() {
                 <p className="eyebrow">SELECCIÓN DYTECH</p>
                 <h2>Celulares disponibles</h2>
                 <p>
-                  Filtra el catálogo y consulta por WhatsApp para confirmar
-                  stock, condición y precio final.
+                  Filtra el catálogo. Cuando encuentres un equipo, consulta con
+                  nuestro vendedor especializado para confirmar stock, condición
+                  y precio final.
                 </p>
               </div>
               <span className="count">{filtered.length} equipos</span>
@@ -176,11 +177,12 @@ export function CatalogPlatform() {
         <section id="contacto" className="section contact">
           <div className="wrap contact-card">
             <div>
-              <p className="eyebrow">HABLEMOS</p>
+              <p className="eyebrow">CONSULTA CON NUESTRO VENDEDOR</p>
               <h2>¿Tienes un equipo en mente?</h2>
               <p>
-                Escríbenos para confirmar disponibilidad, condición, garantía y
-                precio final antes de tu compra.
+                Elige la línea con la que prefieras escribir. Un vendedor
+                especializado de DyTech te confirmará disponibilidad, condición,
+                garantía y precio final.
               </p>
             </div>
             <div className="contact-numbers">
@@ -214,8 +216,6 @@ export function CatalogPlatform() {
 }
 
 function ProductCard({ product: p }: { product: Product }) {
-  const msg = `Hola DyTech, me interesa ${p.brand} ${p.model}${p.variant ? ` ${p.variant}` : ""}. ¿Pueden confirmar disponibilidad y precio final?`;
-
   return (
     <article className="product-card">
       <div className="product-image">
@@ -237,19 +237,9 @@ function ProductCard({ product: p }: { product: Product }) {
         <strong className="price">{money(p.price)}</strong>
         <small className="muted">USD · confirmar precio final</small>
         {p.notes ? <small className="muted">{p.notes}</small> : null}
-        <div className="product-contact-links">
-          {phones.map((phone) => (
-            <a
-              key={phone.number}
-              className="btn"
-              href={whatsapp(phone.number, msg)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {phone.label}
-            </a>
-          ))}
-        </div>
+        <a className="btn" href="#contacto">
+          Consultar este equipo
+        </a>
       </div>
     </article>
   );
