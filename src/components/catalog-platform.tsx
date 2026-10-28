@@ -20,6 +20,10 @@ const phones = [
   { label: "Tigo", number: "593995792922", display: "+593 99 579 2922" },
   { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
 ];
+
+/** Foto hero: coloca tu imagen 4K optimizada en public/hero-phone.webp */
+const HERO_IMAGE = "/hero-phone.webp";
+
 const whatsapp = (number: string, text: string) =>
   `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 const money = (value: number) =>
@@ -32,6 +36,7 @@ export function CatalogPlatform() {
   const [query, setQuery] = useState("");
   const [brand, setBrand] = useState("");
   const [loading, setLoading] = useState(true);
+  const [heroImgOk, setHeroImgOk] = useState(true);
 
   useEffect(() => {
     fetch("/api/catalog?tipo=celulares")
@@ -59,6 +64,9 @@ export function CatalogPlatform() {
     [products, query, brand]
   );
 
+  const stockCount = loading ? null : products.length;
+  const featured = products[0];
+
   return (
     <>
       <header className="site-header">
@@ -77,32 +85,77 @@ export function CatalogPlatform() {
       <main>
         <section id="inicio" className="hero">
           <div className="wrap hero-grid">
-            <div>
+            <div className="hero-copy-block">
               <p className="eyebrow">TECNOLOGÍA DE CALIDAD</p>
               <h1>
                 Equipos que se adaptan a <em>tu ritmo.</em>
               </h1>
+              <p className="hero-trust">
+                Stock real · condición verificada · garantía incluida
+              </p>
               <p className="hero-copy">
-                Encuentra celulares seleccionados, con condición, garantía y
-                precio claro. Revisa nuestro catálogo y habla con un asesor
-                cuando estés listo.
+                Celulares seleccionados, con precio claro y atención directa.
+                Revisa el catálogo y consulta con nuestro vendedor cuando estés
+                listo.
               </p>
               <div className="actions">
                 <a className="btn" href="#catalogo">
                   Explorar catálogo
                 </a>
                 <a className="btn sec" href="#contacto">
-                  Conocer DyTech
+                  Consultar con vendedor
                 </a>
               </div>
             </div>
-            <div className="hero-card">
-              <span>Catálogo actualizado</span>
-              <strong>{loading ? "—" : products.length || "0"}</strong>
-              <small>equipos disponibles</small>
+
+            <div className="hero-visual" aria-hidden={false}>
+              <div className="hero-visual-glow" aria-hidden="true" />
+              <div className="hero-stock-badge">
+                <span>Disponibles ahora</span>
+                <strong>{stockCount === null ? "—" : stockCount}</strong>
+                <small>equipos en catálogo</small>
+              </div>
+              <div className="hero-product">
+                {heroImgOk ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    className="hero-product-img"
+                    src={HERO_IMAGE}
+                    alt={
+                      featured
+                        ? `${featured.brand} ${featured.model}`
+                        : "Celular premium DyTech"
+                    }
+                    width={420}
+                    height={520}
+                    decoding="async"
+                    fetchPriority="high"
+                    onError={() => setHeroImgOk(false)}
+                  />
+                ) : (
+                  <div className="hero-phone-fallback" aria-hidden="true">
+                    <div className="hero-phone-bezel">
+                      <div className="hero-phone-screen">
+                        <span className="hero-phone-brand">DyTech</span>
+                        <span className="hero-phone-model">
+                          {featured
+                            ? `${featured.brand} ${featured.model}`
+                            : "Flagship verificado"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <p className="hero-visual-caption">
+                {featured
+                  ? `${featured.brand} ${featured.model} · ${featured.cond || "disponible"}`
+                  : "Selección curada · Open Box y usados verificados"}
+              </p>
             </div>
           </div>
         </section>
+
         <section id="catalogo" className="section">
           <div className="wrap">
             <div className="section-heading">
@@ -151,6 +204,7 @@ export function CatalogPlatform() {
             )}
           </div>
         </section>
+
         <section id="showroom" className="section section-tint">
           <div className="wrap split">
             <div>
@@ -174,6 +228,7 @@ export function CatalogPlatform() {
             </div>
           </div>
         </section>
+
         <section id="contacto" className="section contact">
           <div className="wrap contact-card">
             <div>
@@ -220,6 +275,7 @@ function ProductCard({ product: p }: { product: Product }) {
     <article className="product-card">
       <div className="product-image">
         {p.img ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img src={p.img} alt={`${p.brand} ${p.model}`} />
         ) : (
           <div className="phone-mark" aria-hidden="true" />
