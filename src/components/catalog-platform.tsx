@@ -15,10 +15,10 @@ type Product = {
   notes?: string;
 };
 
-/** Números de contacto sin jerarquía: mismo peso visual y funcional. */
+/** Números de contacto sin jerarquía: mismo peso visual y funcional. Orden: Tigo, Claro. */
 const phones = [
-  { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
   { label: "Tigo", number: "593995792922", display: "+593 99 579 2922" },
+  { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
 ];
 const whatsapp = (number: string, text: string) =>
   `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
