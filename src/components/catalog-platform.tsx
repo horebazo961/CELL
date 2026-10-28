@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { DYTECH_LOGO_SRC } from "@/lib/logo";
 
 type Product = {
   sku: string;
@@ -74,9 +75,16 @@ export function CatalogPlatform() {
     <>
       <header className="site-header">
         <div className="wrap header-inner">
-          <a className="brand" href="#inicio">
-            <i aria-hidden="true" />
-            DyTech
+          <a className="brand" href="#inicio" aria-label="DyTech — inicio">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="brand-logo"
+              src={DYTECH_LOGO_SRC}
+              alt="DyTech"
+              width={160}
+              height={58}
+              decoding="async"
+            />
           </a>
           <nav aria-label="Navegación principal">
             <a href="#catalogo">Catálogo</a>
@@ -87,7 +95,6 @@ export function CatalogPlatform() {
       </header>
 
       <main>
-        {/* 1. Título atractivo + 3. Imagen + CTA primario */}
         <section id="inicio" className="hero">
           <div className="wrap hero-grid">
             <div className="hero-copy-block">
@@ -99,7 +106,6 @@ export function CatalogPlatform() {
               <p className="hero-trust">
                 Stock real · condición verificada · garantía incluida
               </p>
-              {/* 2. Contenido directo: reglas de la oferta en una línea */}
               <p className="hero-copy">
                 Revisa el catálogo, elige el modelo y escribe a un vendedor
                 especializado. Te confirmamos disponibilidad, condición y precio
@@ -164,7 +170,6 @@ export function CatalogPlatform() {
           </div>
         </section>
 
-        {/* 2. Contenido directo ampliado: beneficios de la oferta */}
         <section className="value-strip" aria-label="Beneficios de la oferta">
           <div className="wrap value-strip-grid">
             <div className="value-item">
@@ -230,7 +235,6 @@ export function CatalogPlatform() {
           </div>
         </section>
 
-        {/* Banda de conversión (CTA repetido, principio landing) */}
         <section className="convert-band" aria-label="Llamado a la acción">
           <div className="wrap convert-band-inner">
             <div>
@@ -271,7 +275,6 @@ export function CatalogPlatform() {
           </div>
         </section>
 
-        {/* 4+5. Captación mínima + CTA (WhatsApp = formulario de 1 paso) */}
         <section id="contacto" className="section contact">
           <div className="wrap contact-card">
             <div>
@@ -312,7 +315,6 @@ export function CatalogPlatform() {
         </div>
       </footer>
 
-      {/* CTA fijo móvil — refuerzo de conversión */}
       <div className="sticky-cta" role="complementary" aria-label="Consulta rápida">
         <a className="btn" href="#contacto">
           Consultar por WhatsApp
