@@ -15,9 +15,10 @@ type Product = {
   notes?: string;
 };
 
+/** Números de contacto sin jerarquía: mismo peso visual y funcional. */
 const phones = [
-  { label: "Principal", number: "593993017483", display: "+593 99 301 7483" },
-  { label: "Alterno", number: "593995792922", display: "+593 99 579 2922" },
+  { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
+  { label: "Tigo", number: "593995792922", display: "+593 99 579 2922" },
 ];
 const whatsapp = (number: string, text: string) =>
   `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
@@ -196,7 +197,6 @@ export function CatalogPlatform() {
                 >
                   <span>{phone.label}</span>
                   <strong>{phone.display}</strong>
-                  <small>Consultar por WhatsApp ↗</small>
                 </a>
               ))}
             </div>
@@ -214,6 +214,8 @@ export function CatalogPlatform() {
 }
 
 function ProductCard({ product: p }: { product: Product }) {
+  const msg = `Hola DyTech, me interesa ${p.brand} ${p.model}${p.variant ? ` ${p.variant}` : ""}. ¿Pueden confirmar disponibilidad y precio final?`;
+
   return (
     <article className="product-card">
       <div className="product-image">
@@ -235,17 +237,19 @@ function ProductCard({ product: p }: { product: Product }) {
         <strong className="price">{money(p.price)}</strong>
         <small className="muted">USD · confirmar precio final</small>
         {p.notes ? <small className="muted">{p.notes}</small> : null}
-        <a
-          className="btn"
-          href={whatsapp(
-            phones[0].number,
-            `Hola DyTech, me interesa ${p.brand} ${p.model}${p.variant ? ` ${p.variant}` : ""}. ¿Pueden confirmar disponibilidad y precio final?`
-          )}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Consultar equipo ↗
-        </a>
+        <div className="product-contact-links">
+          {phones.map((phone) => (
+            <a
+              key={phone.number}
+              className="btn"
+              href={whatsapp(phone.number, msg)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {phone.label}
+            </a>
+          ))}
+        </div>
       </div>
     </article>
   );
