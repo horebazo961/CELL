@@ -15,14 +15,18 @@ type Product = {
   notes?: string;
 };
 
-/** Números de contacto sin jerarquía: mismo peso visual y funcional. Orden: Tigo, Claro. */
+/** Números de contacto sin jerarquía. Orden: Tigo, Claro. */
 const phones = [
   { label: "Tigo", number: "593995792922", display: "+593 99 579 2922" },
   { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
 ];
 
-/** Foto hero: coloca tu imagen 4K optimizada en public/hero-phone.webp */
-const HERO_IMAGE = "/hero-phone.webp";
+/**
+ * Foto de prueba (Unsplash, licencia libre) hasta integrar foto real del equipo.
+ * Cuando tengas la tuya: súbela a public/hero-phone.webp y cambia a "/hero-phone.webp".
+ */
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85";
 
 const whatsapp = (number: string, text: string) =>
   `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
@@ -88,7 +92,8 @@ export function CatalogPlatform() {
             <div className="hero-copy-block">
               <p className="eyebrow">TECNOLOGÍA DE CALIDAD</p>
               <h1>
-                Equipos que se adaptan a <em>tu ritmo.</em>
+                Equipos que se adaptan a{" "}
+                <em>tu ritmo.</em>
               </h1>
               <p className="hero-trust">
                 Stock real · condición verificada · garantía incluida
@@ -108,7 +113,7 @@ export function CatalogPlatform() {
               </div>
             </div>
 
-            <div className="hero-visual" aria-hidden={false}>
+            <div className="hero-visual">
               <div className="hero-visual-glow" aria-hidden="true" />
               <div className="hero-stock-badge">
                 <span>Disponibles ahora</span>
@@ -124,7 +129,7 @@ export function CatalogPlatform() {
                     alt={
                       featured
                         ? `${featured.brand} ${featured.model}`
-                        : "Celular premium DyTech"
+                        : "Celular premium — foto de prueba DyTech"
                     }
                     width={420}
                     height={520}
@@ -151,6 +156,7 @@ export function CatalogPlatform() {
                 {featured
                   ? `${featured.brand} ${featured.model} · ${featured.cond || "disponible"}`
                   : "Selección curada · Open Box y usados verificados"}
+                <span className="hero-visual-note"> · foto de prueba</span>
               </p>
             </div>
           </div>
@@ -301,7 +307,6 @@ function ProductCard({ product: p }: { product: Product }) {
   );
 }
 
-/** Parseo CSV compatible con campos entre comillas (precios 1,499.00). */
 function parseCsvRows(input: string): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
@@ -335,7 +340,6 @@ function parseCsvRows(input: string): string[][] {
       row = [];
       field = "";
     } else if (ch === "\r") {
-      // ignore CR (CRLF)
     } else {
       field += ch;
     }
@@ -361,7 +365,6 @@ function parseCsv(input: string): Product[] {
 
   const headers = rows[0].map((h) => h.trim().toLowerCase());
   const ix = (key: string) => headers.indexOf(key);
-
   const products: Product[] = [];
 
   for (const r of rows.slice(1)) {
