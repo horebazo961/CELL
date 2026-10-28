@@ -71,13 +71,19 @@ a { color: var(--acs); }
   gap: 24px; min-height: 72px;
 }
 .brand {
-  font: 700 22px/1 var(--fd); letter-spacing: -0.03em;
-  color: var(--inktx); text-decoration: none;
-  display: flex; align-items: center; gap: 10px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
 }
-.brand i {
-  width: 26px; height: 26px; border-radius: 7px 7px 7px 2px;
-  background: var(--ac); display: inline-block;
+.brand-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: min(168px, 46vw);
+  object-fit: contain;
+  object-position: left center;
 }
 .site-header nav { display: flex; gap: 4px; }
 .site-header nav a {
@@ -93,7 +99,6 @@ footer {
 }
 footer a { color: var(--inktx); }
 
-/* —— Hero —— */
 .hero {
   background:
     radial-gradient(ellipse 50% 65% at 88% 30%, rgba(59,154,137,.26), transparent 58%),
@@ -250,7 +255,6 @@ h1 em {
 }
 .hero-visual-note { opacity: 0.55; font-weight: 400; font-size: 11px; }
 
-/* Valor / embudo 3 pasos */
 .value-strip {
   background: #12181c;
   border-top: 1px solid var(--inkbd);
@@ -279,7 +283,6 @@ h1 em {
   color: var(--inkmut);
 }
 
-/* Banda conversión */
 .convert-band {
   background: linear-gradient(135deg, rgba(59,154,137,.18), rgba(12,16,18,.95));
   border-top: 1px solid rgba(127,208,193,.25);
@@ -401,7 +404,6 @@ h2 {
   text-align: center; color: var(--mut);
 }
 
-/* CTA sticky solo móvil */
 .sticky-cta {
   display: none;
   position: fixed;
@@ -426,7 +428,7 @@ h2 {
 @media (max-width: 700px) {
   .wrap { padding: 0 16px; }
   .header-inner { min-height: 60px; gap: 12px; }
-  .brand { font-size: 18px; }
+  .brand-logo { height: 30px; }
   .site-header nav a { padding: 6px 8px; font-size: 12px; }
   .hero { padding: 36px 0 40px; }
   .hero-grid, .split, .contact-card { grid-template-columns: 1fr; gap: 24px; }
