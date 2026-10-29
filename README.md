@@ -1,23 +1,32 @@
-# CELL — Catálogo premium (Quito)
+# DyTech (CELL) — Catálogo premium (Quito)
 
-Next.js 15 + Google Sheets (Service Account de **solo lectura**) + Vercel.
+**URL pública canónica (usar esta desde el teléfono):**  
+**https://cell-2dfk.vercel.app**
 
-**Fuente de verdad:** Google Sheet Restricted  
-**WhatsApp comercial:** +593 98 2424 244
+> No usar rutas antiguas tipo `/cell.html`. La app vive en la raíz (`/`).
+
+Next.js 15 + Google Sheets (CSV público / proxy) + Vercel.
+
+| | |
+|---|---|
+| **Producción** | https://cell-2dfk.vercel.app |
+| **Repo** | https://github.com/horebazo961/CELL |
+| **Marca** | DyTech |
+| **WhatsApp** | Tigo +593 99 579 2922 · Claro +593 99 301 7483 |
+| **Fuente de verdad** | Google Sheet (CSV publicado → `/api/catalog`) |
 
 ---
 
 ## 1. Seguridad (LOPDP + Ciberseguridad)
 
-- El Sheet está en **Restricted** (solo cuentas necesarias).
-- Next.js lee el inventario con una **Service Account de solo lectura**.
-- Las credenciales viven **solo** como Secrets en Vercel (nunca en el frontend ni en Git).
-- El endpoint `/api/inventory` y las Server Components nunca exponen `imei_interno` ni `precio_compra_interno`.
-- Política de Privacidad y textos de “cierre humano” incluidos.
+- El Sheet de inventario interno puede permanecer Restricted.
+- El catálogo público se sirve vía CSV publicado + proxy Next.js `/api/catalog` (sin secretos en el frontend).
+- `/api/inventory` (Service Account) es opcional y solo servidor; nunca expone `imei_interno` ni `precio_compra_interno`.
+- Política de Privacidad en `/privacidad`.
 
 ---
 
-## 2. Configurar la Service Account (una sola vez)
+## 2. Configurar la Service Account (opcional, solo si usas `/api/inventory`)
 
 1. Ve a [Google Cloud Console](https://console.cloud.google.com/) → crea o elige un proyecto.
 2. Habilita **Google Sheets API**.
@@ -30,36 +39,32 @@ Next.js 15 + Google Sheets (Service Account de **solo lectura**) + Vercel.
 
 ---
 
-## 3. Variables de entorno en Vercel (Secrets)
+## 3. Variables de entorno en Vercel
 
-En el proyecto de Vercel → **Settings → Environment Variables**:
+En el proyecto de Vercel → **Settings → Environment Variables** (solo si usas Service Account):
 
 | Nombre                         | Tipo    | Valor                                      |
 |--------------------------------|---------|--------------------------------------------|
-| `GOOGLE_SHEETS_ID`             | Config  | `1gJpMqcK_xzokwBxYUsF5Fyg_Yuh-N8uU3xVzOjaqjUc` |
+| `GOOGLE_SHEETS_ID`             | Config  | ID del Sheet                               |
 | `GOOGLE_SERVICE_ACCOUNT_EMAIL` | **Secret** | email de la Service Account             |
 | `GOOGLE_PRIVATE_KEY`           | **Secret** | contenido de `private_key` (con `\n`)   |
 
-- Marca **Secret** (no Config) para email y private_key.
-- Aplica a **Production** (y Preview si quieres).
-- Después de guardar → **Redeploy**.
+Para el modo CSV público actual **no hace falta** Service Account: el catálogo lee el CSV publicado.
 
 ---
 
-## 4. Conectar este repositorio a Vercel (paso a paso)
+## 4. Conectar este repositorio a Vercel
 
 1. Entra a [vercel.com](https://vercel.com) e inicia sesión (preferible con GitHub).
 2. **Add New… → Project**.
 3. Importa el repositorio **`horebazo961/CELL`**.
-4. Framework Preset: **Next.js** (debe detectarse solo).
-5. Root Directory: dejar vacío (o `.`).
-6. **Environment Variables**: añade las 3 variables de la tabla anterior **antes** del primer deploy.
-7. Haz clic en **Deploy**.
-8. Cuando termine tendrás una URL pública tipo `https://cell-xxxx.vercel.app`.
+4. Framework Preset: **Next.js**.
+5. **Deploy**.
+6. URL de producción aceptada: **https://cell-2dfk.vercel.app**
 
 ### Verificación post-deploy
 
-- Abre la URL → debe cargar el catálogo (o el mensaje de error claro si faltan Secrets).
+- Abre https://cell-2dfk.vercel.app → catálogo DyTech.
 - Prueba un CTA de WhatsApp en el móvil.
 - Confirma que `/privacidad` muestra la política.
 
@@ -69,8 +74,6 @@ En el proyecto de Vercel → **Settings → Environment Variables**:
 
 ```bash
 cp .env.example .env.local
-# Completa GOOGLE_SERVICE_ACCOUNT_EMAIL y GOOGLE_PRIVATE_KEY
-
 npm install
 npm run dev
 ```
@@ -84,23 +87,31 @@ Abre http://localhost:3000
 ```
 src/
   app/
-    page.tsx              → Catálogo (Server Component)
-    privacidad/page.tsx   → Política de Privacidad
-    api/inventory/route.ts→ Endpoint de inventario (solo servidor)
+    page.tsx                 → Catálogo (CatalogPlatform)
+    privacidad/page.tsx      → Política de Privacidad
+    api/catalog/route.ts     → Proxy CSV público
+    api/inventory/route.ts   → Endpoint opcional Service Account
+  components/
+    catalog-platform.tsx     → UI catálogo + contacto
   lib/
-    sheets.ts             → Lectura segura del Google Sheet
+    sheets.ts                → Lectura Sheet (servidor)
+    logo.ts                  → Logo DyTech
+public/
+  dytech-logo.webp           → Logo estático
 ```
 
 ---
 
-## 7. Próximos pasos (Fase 1 restante)
+## 7. Próximos pasos
 
 - [ ] Completar nombre/RUC en la Política de Privacidad
-- [ ] Migrar el Integration Hub completo del `index.html` original (opcional)
 - [ ] Añadir fotos reales desde `fotos_urls`
-- [ ] Dominio personalizado en Vercel
+- [ ] Foto hero real (`public/hero-phone.webp`)
+- [ ] Dominio personalizado en Vercel (opcional)
 
 ---
 
 **Principio rector:**  
-Primero fuente de verdad (Sheet Restricted) → luego sitio que solo lee → después automatización.
+Primero fuente de verdad → luego sitio que solo lee → después automatización.
+
+**URL canónica de producción:** https://cell-2dfk.vercel.app
