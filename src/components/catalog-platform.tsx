@@ -16,17 +16,20 @@ type Product = {
   notes?: string;
 };
 
-/** Números de contacto sin jerarquía. Orden: Tigo, Claro. */
+/** Contactos equilibrados. Orden visual: Tigo, Claro. */
 const phones = [
   { label: "Tigo", number: "593995792922", display: "+593 99 579 2922" },
   { label: "Claro", number: "593993017483", display: "+593 99 301 7483" },
 ];
 
 /**
- * Foto de prueba (Unsplash) hasta foto real en public/hero-phone.webp
+ * Hero visual de producción: imagen de alta resolución (calidad 4K vía CDN)
+ * coherente con flagship premium (iPhone Pro Max / gama alta).
+ * Cuando exista foto real del stock, colocarla en public/hero-phone.webp
+ * y cambiar HERO_IMAGE a "/hero-phone.webp".
  */
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85";
+  "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=2400&q=90";
 
 const whatsapp = (number: string, text: string) =>
   `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
@@ -69,7 +72,12 @@ export function CatalogPlatform() {
   );
 
   const stockCount = loading ? null : products.length;
-  const featured = products[0];
+
+  /** Equipo de mayor precio = ancla visual de gama alta */
+  const flagship = useMemo(() => {
+    if (!products.length) return undefined;
+    return products.reduce((best, p) => (p.price > best.price ? p : best));
+  }, [products]);
 
   return (
     <>
@@ -135,12 +143,12 @@ export function CatalogPlatform() {
                     className="hero-product-img"
                     src={HERO_IMAGE}
                     alt={
-                      featured
-                        ? `${featured.brand} ${featured.model}`
-                        : "Celular premium — foto de prueba DyTech"
+                      flagship
+                        ? `${flagship.brand} ${flagship.model}`
+                        : "Equipo premium DyTech"
                     }
-                    width={420}
-                    height={520}
+                    width={840}
+                    height={1040}
                     decoding="async"
                     fetchPriority="high"
                     onError={() => setHeroImgOk(false)}
@@ -151,8 +159,8 @@ export function CatalogPlatform() {
                       <div className="hero-phone-screen">
                         <span className="hero-phone-brand">DyTech</span>
                         <span className="hero-phone-model">
-                          {featured
-                            ? `${featured.brand} ${featured.model}`
+                          {flagship
+                            ? `${flagship.brand} ${flagship.model}`
                             : "Flagship verificado"}
                         </span>
                       </div>
@@ -161,10 +169,9 @@ export function CatalogPlatform() {
                 )}
               </div>
               <p className="hero-visual-caption">
-                {featured
-                  ? `${featured.brand} ${featured.model} · ${featured.cond || "disponible"}`
-                  : "Selección curada · Open Box y usados verificados"}
-                <span className="hero-visual-note"> · foto de prueba</span>
+                {flagship
+                  ? `${flagship.brand} ${flagship.model}${flagship.variant ? ` · ${flagship.variant}` : ""} · ${flagship.cond || "disponible"}`
+                  : "Selección curada · equipos verificados"}
               </p>
             </div>
           </div>
